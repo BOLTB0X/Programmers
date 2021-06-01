@@ -22,4 +22,4 @@ def solution(progress,speeds):
             cnt=1
     answer.append(cnt) #마지막
     return answer
-print(solution(progress,speeds))
+print(solution(progress,speeds)) 
