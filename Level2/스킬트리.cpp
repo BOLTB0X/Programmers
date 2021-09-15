@@ -5,27 +5,25 @@ using namespace std;
 
 int solution(string skill, vector<string> skill_trees) {
     int answer = 0;
-
-    //Æ®¸® Å½»ö
+    //ìŠ¤í‚¬íŠ¸ë¦¬ í–‰ê°œìˆ˜ë§Œí¼ ë°˜ë³µ
     for (int i = 0; i < skill_trees.size(); i++) {
-        vector<int> tmp;
+        //ìŠ¤í‚¬íŠ¸ë¦¬ì˜ í–‰ì˜ ì„ì‹œë²¡í„°
+        vector<int> tmp_skill;
         for (int j = 0; j < skill_trees[i].size(); j++) {
-            //Áï skill¿¡ ÀÖ´Â °Íµé¸¸ tmp¿¡ »ğÀÔ
-            for (int k = 0; k < skill.size(); k++) {
-                if (skill[k] == skill_trees[i][j]) {
-                    tmp.push_back(skill_trees[i][j]);
-                }
+            for (int k = 0; k < skill.length(); k++) {
+                //ìŠ¤í‚¬ê³¼ ìŠ¤í‚¬íŠ¸ë¦¬ê°€ ê°™ë‹¤ë©´
+                if (skill[k] == skill_trees[i][j])
+                    tmp_skill.push_back(skill_trees[i][j]);
             }
         }
         bool flag = true;
-        //tmp¿Í skillÀÌ ºñ±³
-        for (int j = 0; j < tmp.size(); j++) {
-            if (tmp[j] != skill[j]) {
+        //ìŠ¤í‚¬íŠ¸ë¦¬ ìˆœì„œê°€ ë§ëŠ” ì§€ ì²´í¬
+        for (int j = 0; j < tmp_skill.size(); j++) {
+            if (skill[j] != tmp_skill[j]) {
                 flag = false;
                 break;
             }
         }
-        //ÀÏÄ¡ÇÏ¸é answer++
         if (flag)
             answer++;
     }
