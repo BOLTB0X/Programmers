@@ -3,58 +3,51 @@
 
 using namespace std;
 
-//½º¿ÍÇÎ ÇÔ¼ö ¿ø¼Ò À§Ä¡ ¼­·Î º¯°æ
-void swap(int* a, int* b) {
-    int *tmp = a;
-    a = b;
-    b = tmp;
+void swap(int *a, int *b) {
+    int *tmp=a;
+    a=b;
+    b=tmp;
     return;
 }
 
-//ÄüÁ¤·Ä
+//í€µì •ë ¬
 void quicksort(vector<int> &arr, int start, int end) {
-    //¸¸¾à ¿ø¼Ò°¡ ÇÏ³ª¶ó¸é
-    if (start >= end) 
+    //ë§Œì•½ ì›ì†Œê°€ í•˜ë‚˜ë¼ë©´
+    if (start>=end)
         return;
-    
-    //ÇÇ¹şÀº Ã¹¹øÂ° ¿ø¼Ò
-    int pivot = start;
-    int left = start + 1;
-    int right = end;
-    
-    //ÁÂ¿ì°¡ ¾ù°¥¸±¶§±îÁö ¹İº¹
-    while (left<=right) {
-        //ÇÇ¹şº¸´Ù Å« µ¥ÀÌÅÍ¸¦ Ã£À» ¶§±îÁö ¹İº¹
-        while (left <= end && arr[left] <= arr[pivot])
+    int pivot=start;
+    int left=pivot+1;
+    int right=end;
+    while (left <= right) {
+        //í”¼ë²—ë³´ë‹¤ í° ê°’ì„ ë§Œë‚ ë•Œ ê¹Œì§€
+        while (left <= end && arr[left] <= arr[pivot]) 
             left++;
-        //ÇÇ¹şº¸´Ù ÀÛÀº µ¥ÀÌÅÍ¸¦ Ã£À» ¶§±îÁö ¹İº¹
+        //í”¼ë²—ë³´ë‹¤ ì‘ì€ ê°’ì„ ë§Œë‚  ë•Œ ê¹Œì§€
         while (right > start && arr[right] >= arr[pivot])
             right--;
-        //¸¸¾à ¾ù°¥·È´Ù¸é
-        if (left > right)
-            swap(arr[pivot], arr[right]);
+        //ë§Œì•½ ì—‡ê°ˆë ¸ë‹¤ë©´
+        if (left > right) 
+            swap(arr[pivot],arr[right]);
         else
-            swap(arr[left], arr[right]);
+            swap(arr[left],arr[right]);
     }
-    //ºĞÇÒ ÀÌÈÄ ¿ŞÂÊ ºÎºĞ°ú ¿À¸¥ÂÊ ºÎºĞ¿¡¼­ °¢°¢ Á¤·Ä
-    quicksort(arr, start, right - 1);
-    quicksort(arr, right + 1, end);
+    quicksort(arr,start,right-1);
+    quicksort(arr,right+1,end);
+    return;
 }
 
 int solution(vector<int> citations) {
     int answer = 0;
-    //ÄüÁ¤·Ä ÀÌ¿ë ¿À¸§Â÷¼ø
-    quicksort(citations, 0, citations.size() - 1);
-    //º¤ÅÍÀÇ ±æÀÌ¸¦ ¾Æ´Ñ 1ºÎÅÍ n±îÁö ¿ÏÀüÅ½»ö
-    for (int i = 0; i < citations.size(); i++) {
-        //h-index ÁöÁ¤
-        //ºñ±³ º¤ÅÍ´Â Á¡Á¡ Ä¿Áö°í h-idx´Â ÀÛ¾ÆÁü
-        int h_idx = citations.size() - i;
-
+    //í€µ ì •ë ¬ì„ ì´ìš©í•œ ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
+    quicksort(citations,0,citations.size()-1);
+    //ì •ë ¬ëœ ë²¡í„°ì—ì„œ ê¸¸ì´ì™€ ê·¸ ì¸í…ìŠ¤ë¥¼ ëº€ ê°’ì´ ì›ì†Œë³´ë‹¤ í¬ë©´ ê·¸ ê°’ì´
+    //h_index
+    for (int i=0;i<citations.size();i++) {
+        //ì¦‰ ê¹Šì´ ë“¤ì–´ê°ˆ ìˆ˜ë¡ h_idxê°’ì€ ì¤„ì–´ë“ ë‹¤.
+        int h_idx=citations.size()-i;
         if (citations[i] >= h_idx) {
-            //Ã£¾Æ¸é
-            answer = h_idx;
-            break;
+            answer=h_idx;
+            break; //ì•ˆê·¸ëŸ¼ ê³„ì† ì§„í–‰ë¨
         }
     }
     return answer;
