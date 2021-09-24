@@ -3,61 +3,59 @@
 
 using namespace std;
 
-//스와프
+//스와핑
 void swap(int *a, int *b) {
-    int *tmp = a;
+    int *tmp=a;
     a=b;
     b=tmp;
 }
 
-//퀵정렬 이용
-void quicksort(vector<int>& arr, int start, int end) {
+//퀵정렬
+void quicksort(vector<int> &arr, int start, int end) {
+    //원소가 한개인 경우
     if (start >= end)
         return;
-    int pivot = start;
+    int pivot=start;
     int left = start+1;
-    int right = end;
+    int right =end;
+    
     while (left <= right) {
-        //피벗보다 큰 데이터를 찾을 때까지 반복
-		while (left <= end && arr[left] <= arr[pivot]) left++;
-		// 피벗보다 작은 데이터를 찾을 때까지 반복
-		while (right > start && arr[right] >= arr[pivot]) right--;
-		// 엇갈렸다면 작은 데이터와 피벗을 교체
-		if (left > right) swap(arr[pivot], arr[right]);
-		// 엇갈리지 않았다면 작은 데이터와 큰 데이터를 교체
-		else swap(arr[left], arr[right]);
+        //피벗값보다 작은 값
+        while (left <= end && arr[left] <= arr[pivot])
+            left++;
+        //피벗값보다 큰 값
+        while (right > start && arr[right] >= arr[pivot])
+            right--;
+        //엇갈렸다면
+        if (left > right)
+            swap(arr[pivot],arr[right]);
+        else
+            swap(arr[left],arr[right]);
     }
     quicksort(arr,start,right-1);
     quicksort(arr,right+1,end);
+    return;
 }
 
-// 배열자르기
-int sliding_arr(vector<int> array,vector<int> tmp) {
-    vector<int> result;
-    int start=tmp[0];
-    int end=tmp[1];
-    int target=tmp[2];
-    //문제 조건에 맞게 배열원소 삽입
-    for (int i=start-1;i<end;i++) {
-        result.push_back(array[i]);
-    }
-    //퀵정렬로 오름차순
-    quicksort(result,0,result.size()-1);
-    //타겟 원소 반환
-    return result[target-1];
+//배열 슬라이딩
+int sliding(vector<int> &array, int start, int end, int target) {
+    vector<int> v;
+    //벡터에 슬라이딩 된 원소들 삽입
+    for (int i=start-1; i<end;i++) 
+        v.push_back(array[i]);
+    //정렬
+    quicksort(v,0,v.size()-1);
+    return v[target-1];
 }
 
-//해결
 vector<int> solution(vector<int> array, vector<vector<int>> commands) {
     vector<int> answer;
-    //명령 갯수만큼 일단 
+    //먼저 커맨드의 요청에 따라 배열을 잘라야함
+    //임시벡터 생성 후 임시벡터에 삽입
     for (int i=0;i<commands.size();i++) {
-        vector<int> tmp;
-        for (int j=0; j<3; j++) {
-            tmp.push_back(commands[i][j]);
-        }
-        //문제조건에 맞게
-        int ret= sliding_arr(array,tmp);
+        //열은 3으로 고정
+        //배열 슬라이딩 호출
+        int ret = sliding(array,commands[i][0],commands[i][1],commands[i][2]);
         answer.push_back(ret);
     }
     return answer;
