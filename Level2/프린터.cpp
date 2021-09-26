@@ -14,8 +14,8 @@ int solution(vector<int> priorities, int location) {
         q.push({ idx++,p }); // 인덱스와 우선도
         pq.push(p); //우선순위 큐에 우선도 삽입
     }
-
-    int order = 1; //나오는 순서
+    //나오는 순서
+    int order = 1; 
     while (!q.empty()) {
         pair<int, int> cur = q.front(); //큐 최상단
         //우선순위 큐의 상단이 작다면
