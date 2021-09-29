@@ -17,27 +17,27 @@ bool is_prime(int n) {
 int solution(string numbers) {
     int answer = 0;
     vector<char> v;
-    //¹®ÀÚ¿­ ¿ø¼Ò¸¦ º¤ÅÍ¿¡ »ğÀÔ
+    //ë¬¸ìì—´ ì›ì†Œë¥¼ ë²¡í„°ì— ì‚½ì…
     for (int i = 0; i < numbers.size(); i++)
         v.push_back(numbers[i]);
 
-    //º¤ÅÍ ¿À¸§Â÷¼ø Á¤·Ä
+    //ë²¡í„° ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
     sort(v.begin(), v.end());
 
-    //vº¤ÅÍ·Î ¸¸µé ¼ö ÀÖ´Â °æÀÇ ¼ö¸¦ ´ãÀ» º¤ÅÍ
+    //vë²¡í„°ë¡œ ë§Œë“¤ ìˆ˜ ìˆëŠ” ê²½ì˜ ìˆ˜ë¥¼ ë‹´ì„ ë²¡í„°
     vector<int> per;
-    //°æ¿ìÀÇ ¼ö Å½»ö ½ÃÀÛ
+    //ê²½ìš°ì˜ ìˆ˜ íƒìƒ‰ ì‹œì‘
     do {
         string tmp = "";
         for (int i = 0; i <= v.size(); i++) {
-            //¸¸µé ¼ö ÀÖ´Â ¸ğµç ¼ö¸¦ per¿¡ »ğÀÔ
+            //ë§Œë“¤ ìˆ˜ ìˆëŠ” ëª¨ë“  ìˆ˜ë¥¼ perì— ì‚½ì…
             tmp.push_back(v[i]);
             per.push_back(stoi(tmp));
         }
     } while (next_permutation(v.begin(), v.end()));
-    //¼ø¿­ º¤ÅÍ Á¤·Ä
+    //ìˆœì—´ ë²¡í„° ì •ë ¬
     sort(per.begin(), per.end());
-    //Áßº¹°ª Á¦°Å
+    //ì¤‘ë³µê°’ ì œê±° 
     per.erase(unique(per.begin(), per.end()), per.end());
 
     for (int i = 0; i < per.size(); i++) {
