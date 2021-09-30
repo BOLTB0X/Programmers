@@ -8,7 +8,7 @@ vector<int> graph[20001];
 int dist[20001] = { 0, };
 bool visited[20001];
 
-//BFS·Î ±×·¡ÇÁ Å½»ö
+//BFSë¡œ ê·¸ë˜í”„ íƒìƒ‰
 int BFS(void) {
     int max_value = -1;
     queue<int> q;
@@ -21,7 +21,7 @@ int BFS(void) {
 
         for (int i = 0; i < graph[cur].size(); i++) {
             int next = graph[cur][i];
-            //¹Ì¹æ¹®ÀÌ¸é
+            //ë¯¸ë°©ë¬¸ì´ë©´
             if (!visited[next]) {
                 dist[next] = dist[cur] + 1;
                 visited[next] = true;
@@ -30,7 +30,7 @@ int BFS(void) {
                     max_value = dist[next];
                 }
             }
-        }
+        } 
     }
     return max_value;
 }
@@ -46,7 +46,7 @@ int count_max(int max_value, int n) {
 
 int solution(int n, vector<vector<int>> edge) {
     int answer = 0;
-    //¹«Çâ±×·¡ÇÁ »ı¼º
+    //ë¬´í–¥ê·¸ë˜í”„ ìƒì„±
     for (int i = 0; i < edge.size(); i++) {
         graph[edge[i][0]].push_back(edge[i][1]);
         graph[edge[i][1]].push_back(edge[i][0]);
