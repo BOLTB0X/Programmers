@@ -1,7 +1,7 @@
 #include <vector>
 
 using namespace std;
-
+//답
 int answer = 0;
 
 void DFS(vector<int> &arr,int tot, int target, int idx) {
