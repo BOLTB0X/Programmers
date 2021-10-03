@@ -3,8 +3,6 @@
 
 using namespace std;
 
-//무향그래프
-
 //너비우선
 int BFS(vector<int> graph[], vector<int>& dist) {
     //최대 거리
@@ -31,7 +29,6 @@ int BFS(vector<int> graph[], vector<int>& dist) {
             //크다면 교체
             if (dist[next] > max_dist)
                 max_dist = dist[next];
-
         }
     }
     return max_dist;
