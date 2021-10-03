@@ -3,59 +3,66 @@
 
 using namespace std;
 
+//ê²°ê³¼
 int result = 51;
 
-//ÃÖ¼Ò
+//ìµœì†Œ
 int min(int a, int b) {
     return a < b ? a : b;
 }
 
-//º¯È¯Á¶°Ç ´Ù¸¥ ¹®ÀÚ°¡ 1°³ÀÎÁö ÆÇº°
-bool get_trans_cnt(string& begin, string& st) {
-    int occ_cnt = 0;
-    //¹®ÀÚ¿­ Æ¯Á¤ Çà, ¿­·Î Å½»ö
-    for (int j = 0; j < st.length(); j++) {
-        //½ÃÀÛ´Ü¾î¿Í Å½»ö ´Ü¾î¿Í Â÷ÀÌ Ä«¿îÆ®
-        if (begin[j] != st[j])
-            occ_cnt++;
-        //2°³ ÀÌ»óÀÌ¸é º¯È¯ºÒ°¡
-        if (occ_cnt == 2)
+bool is_trans(string &a, string &b) {
+    //ê° ë¬¸ìì—´ì˜ ê¸¸ì´ëŠ” ê°™ìœ¼ë¯€ë¡œ
+    int trans_cnt = 0;
+    for (int i = 0; i < a.length(); i++) {
+        if (a[i] != b[i])
+            trans_cnt++;
+        //ë‘ ë²ˆ ë³€í™˜í•´ì•¼í•˜ë©´ 
+        if (trans_cnt == 2)
             return false;
     }
-    //´Ù¸¥ ¹®ÀÚ°¡ 1°³ ÀÌ¸é
     return true;
 }
 
-//DFSÁ¤ÀÇ
-void DFS(string begin, string target, vector<string>& words, vector<bool>& visited, int cnt) {
-    //Å»Ãâ Á¶°Ç
-    if (begin == target) {
-        result = min(result, cnt);
+//ê¹Šì´ ìš°ì„ 
+void DFS(string start, string target, vector<string>& words, vector<bool>& visited, int depth) {
+    //íƒˆì¶œ ì¡°ê±´
+    if (start == target) {
+        result = min(result, depth);
         return;
     }
-    //¹®ÀÚ¿­ ºñ±³
+
+    //ê° ë‹¨ì–´ë²¡í„° ìˆœíšŒ
     for (int i = 0; i < words.size(); i++) {
-        //º¯È¯Á¶°ÇÀÌ µÇ¸é
-        if (get_trans_cnt(begin, words[i])) {
-            //¹Ì¹æ¹® --> Áï º¯È¯ÇÒ¼ö ÀÖ´Â °÷À¸·Î
-            if (!visited[i]) {
-                visited[i] = true;
-                //ÀÌ ÇØ´ç ´Ü¾î·Î ÀÌµ¿
-                DFS(words[i], target, words, visited, cnt + 1);
-                visited[i] = false;
-            }
+        //ë³€í™˜ê°€ëŠ¥í•œì§€
+        if (is_trans(start, words[i])) {
+            //ì¬ë°©ë¬¸ì´ë©´
+            if (visited[i])
+                continue;
+            //ë°©ë¬¸ì²´í¬
+            visited[i] = true;
+            //DFSí˜¸ì¶œ
+            DFS(words[i], target, words, visited, depth + 1);
+            //ì™„ì „íƒìƒ‰ì´ë¯€ë¡œ ë‹¤ì‹œ ë¯¸ë°©ë¬¸ ì²˜ë¦¬
+            visited[i] = false;
         }
     }
 }
 
 int solution(string begin, string target, vector<string> words) {
     int answer = 0;
-    //¹æ¹®º¤ÅÍ »ı¼º ¹× ÃÊ±âÈ­
+    //ë¨¼ì € ì²´í¬ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
     vector<bool> visited(words.size(), false);
-    //DFS·Î Å½»ö ½ÃÀÛ
+    
+    //DFSí˜¸ì¶œ
     DFS(begin, target, words, visited, 0);
-    answer = result;
-    if (answer == 51)
-        return 0;
+    
+    //ê²°ê³¼ ë³€ìˆ˜ ê°’ ì²´í¬
+    if (result == 51)
+        answer = 0;
+    else
+        answer = result;
+    
+    //ì •ë‹µ ë°˜í™˜
     return answer;
 }
