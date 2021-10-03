@@ -4,16 +4,15 @@
 using namespace std;
 
 //무향그래프
-vector<int> graph[20001];
 
 //너비우선
-int BFS(vector<bool>& visited, vector<int>& dist) {
+int BFS(vector<int> graph[], vector<int>& dist) {
     //최대 거리
     int max_dist = -1;
 
     queue<int> q;
     q.push(1);
-    visited[1] = true;
+    dist[1] = 0;
 
     //큐가 비어질때 까지
     while (!q.empty()) {
@@ -23,11 +22,10 @@ int BFS(vector<bool>& visited, vector<int>& dist) {
         for (int i = 0; i < graph[cur].size(); i++) {
             int next = graph[cur][i];
             //재방문인 경우
-            if (visited[next])
+            if (dist[next] != -1)
                 continue;
             //해당 정점의 거리 저장
             dist[next] = dist[cur] + 1;
-            visited[next] = true;
             q.push(next);
             
             //크다면 교체
@@ -53,10 +51,9 @@ int get_max_dist_count(int n, int max_value, vector<int>& dist) {
 int solution(int n, vector<vector<int>> edge) {
     int answer = 0;
     //체크리스트 생성 및 초기화
-    vector<bool> visited(edge.size() + 1, false);
-    vector<int> dist(edge.size() + 1, 0);
+    vector<int> dist(edge.size() + 1, -1);
     //edge벡터의 정보를 무향 그래프 생성
-
+    vector<int> graph[20001];
 
     //그래프에 삽입
     for (int i = 0; i < edge.size(); i++) {
@@ -64,7 +61,8 @@ int solution(int n, vector<vector<int>> edge) {
         graph[edge[i][1]].push_back(edge[i][0]);
     }
     //BFS로 각 거리를 dist벡터에 저장
-    int ret = BFS(visited, dist);
+    int ret = BFS(graph,dist);
+    //최대 거리 정점 갯수 
     answer = get_max_dist_count(n, ret, dist);
 
     return answer;
