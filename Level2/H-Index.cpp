@@ -3,6 +3,7 @@
 
 using namespace std;
 
+//스와핑
 void swap(int *a, int *b) {
     int *tmp=a;
     a=b;
