@@ -49,7 +49,7 @@ int solution(vector<int> citations) {
             answer=h_idx;
             //H-idx를 알았으니
             break; 
-            //안그럼 계속 진행됨
+            //안그럼 계속 작아짐
         }
     }
     return answer;
