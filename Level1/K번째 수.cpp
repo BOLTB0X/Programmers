@@ -15,10 +15,12 @@ void quicksort(vector<int> &arr, int start, int end) {
     //원소가 한개인 경우
     if (start >= end)
         return;
+    //피벗과 왼 오 셋팅
     int pivot=start;
     int left = start+1;
     int right =end;
     
+    //엇갈릴때 까지 반복
     while (left <= right) {
         //피벗값보다 작은 값
         while (left <= end && arr[left] <= arr[pivot])
