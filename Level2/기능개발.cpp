@@ -7,12 +7,14 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
     vector<int> answer;
     vector<int> tmp_v ;
     vector<int> day;
-    //¾ó¸¶³ª ³²¾Ò´ÂÁö È®ÀÎ
+    
+    //ì–¼ë§ˆë‚˜ ë‚¨ì•˜ëŠ”ì§€ í™•ì¸
     for (int i = 0; i < progresses.size(); i++) {
         tmp_v.push_back(100 - progresses[i]);
     }
-    //¸îÀÏ °É¸®´ÂÁö È®ÀÎ
+    //ëª‡ì¼ ê±¸ë¦¬ëŠ”ì§€ í™•ì¸
     for (int i = 0; i < tmp_v.size(); i++) {
+        //ë”± ë–¨ì–´ì§€ë©´
         if (tmp_v[i] % speeds[i] == 0) {
             day.push_back(tmp_v[i] / speeds[i]);
         }
@@ -21,7 +23,7 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
     }
     int sample_day = day[0];
     int cnt = 1;
-    //°¢ ±â°£³» °°ÀÌ ¹èÆ÷µÇ´ÂÁö È®ÀÎ
+    //ê° ê¸°ê°„ë‚´ ê°™ì´ ë°°í¬ë˜ëŠ”ì§€ í™•ì¸
     for (int i = 1; i < day.size(); i++) {
         if (sample_day >= day[i]) 
             cnt += 1;
@@ -31,7 +33,7 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
             cnt = 1;
         }
     }
-    //¸¶Áö¸·Àº »ğÀÔÀÌ ¾ÈµÇ´Ï
+    //ë§ˆì§€ë§‰ì€ ì‚½ì…ì´ ì•ˆë˜ë‹ˆ
     answer.push_back(cnt);
 
     return answer;
