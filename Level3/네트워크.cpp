@@ -3,35 +3,39 @@
 
 using namespace std;
 
-//깊이 우선
-void DFS(int start, int n, vector<vector<int>>& computers, vector<bool>& visited) {
-    //방문체크
-    visited[start] = true;
-    //정점 갯수만큼 순회
-    for (int i = 0; i < n; i++) {
-        //재방문이면
+//깊이 우선 탐색
+void DFS(vector<vector<int>> &computers, vector<bool> &visited,int start) {
+    visited[start]=true;
+    //행 길이와 열 길이가 같으므로
+    for (int i=0;i<computers.size();++i) {
+        //재방문인 경우
         if (visited[i])
             continue;
-        //연결되어있지 않다면
+        //연결되어있지 않을 경우
         if (computers[start][i] == 0)
             continue;
-        //DFS 호출
-        DFS(i, n, computers, visited);
+        //다음 정점으로 DFS
+        DFS(computers,visited,i);
     }
 }
 
 int solution(int n, vector<vector<int>> computers) {
     int answer = 0;
-    //체크리스트 초기화
-    vector<bool> visited(n, false);
-    //네트워크의 갯수는 각 정점을 for문으로 순회하여 
-    //미방문 정점을 발견하여 DFS하는 갯수와 같다.
-    for (int i = 0; i < n; i++) {
-        if (!visited[i]) {
+    
+    //방문리스트 생성 및 초기화
+    vector<bool> visited(n,false);
+    
+    //각 컴퓨터들의 연결요소를 나타내는 정점 탐색
+    for (int i=0;i<computers.size();++i) {
+        //미방문이면
+        if(!visited[i]) {
+            //카운트
             answer++;
-            DFS(i, n, computers, visited);
+            //DFS호출
+            DFS(computers,visited,i);
+            //다시 미방문 처리
+            visited[i]=false;
         }
     }
-    //정답 반환
     return answer;
 }
