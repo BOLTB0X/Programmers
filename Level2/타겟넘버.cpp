@@ -2,30 +2,31 @@
 
 using namespace std;
 
-//횟수 초기화
-int cnt = 0;
+//DFS를 사용하기 때문에 전역 result
+int result=0;
 
-void DFS(int tot, vector<int>& numbers, int target, int depth) {
-    //깊이가 벡터길이까지 도달했다면 == 탈출조건
+//깊이 우선 탐색
+void DFS(vector<int> &numbers, int target, int tot, int depth) {
+    //numbers벡터까지 도달한다면 
     if (depth == numbers.size()) {
-        //총합이 타켓과 같다면
-        if (tot == target) {
-            //카운트
-            cnt++;
-        }
+        //target으로 만들 수 있다면
+        if (tot == target)
+            result++;
         return;
     }
-    //더하거나 뺄경우를 DFS 호출
-    DFS(tot + numbers[depth], numbers, target, depth + 1);
-    DFS(tot - numbers[depth], numbers, target, depth + 1);
+    //각각 덧셈 뺄셈한 것들로 DFS호출
+    DFS(numbers,target,tot+numbers[depth],depth+1);
+    DFS(numbers,target,tot-numbers[depth],depth+1);
+    return;
 }
 
 int solution(vector<int> numbers, int target) {
     int answer = 0;
-
-    //백트래킹 기법으로 완전탐색
-    DFS(0, numbers, target, 0);
-    //카운팅된 cnt를 answer에 넣어줌
-    answer = cnt;
+    
+    //DFS로 탐색 시작
+    DFS(numbers,target,0,0);
+    answer=result;
+    
+    //정답 반환
     return answer;
 }
