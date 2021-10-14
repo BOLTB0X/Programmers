@@ -5,37 +5,46 @@
 using namespace std;
 
 int solution(vector<int> priorities, int location) {
-    queue<pair<int, int>> q;
-    //최대
+    int answer = 0;
+    //우선순위 큐 선언
     priority_queue<int> pq;
-    //기존 자리
-    int idx = 0;
-    //우선순위벡터를 큐와 우선순위큐에 넣어줌
-    for (int i = 0; i < priorities.size(); i++) {
-        q.push({ idx++,priorities[i] });
+    
+    //큐 선언, 우선순위와 기존 위치=idx까지
+    queue<pair<int,int>> q;
+    
+    //우선순위를 pq,q에 옮겨줌
+    for (int i=0;i<priorities.size();++i) {
         pq.push(priorities[i]);
+        q.push({priorities[i],i});
     }
-
-    //반복문으로 정답반환
-    int answer = 1;
+    
+    //우선순위 큐가 내림차순으로 정렬됨
+    //원하는 위치가 몇번째로 뽑히는 지가 궁금하므로
+    //일반 큐의 i와 원하는 위치를 비교
+    int order = 1;
     while (!q.empty()) {
-        pair<int, int> cur = q.front();
-        //우선순위 >= 현위치
-        if (cur.second >= pq.top()) {
-            //원하는 위치이면 반환
-            if (cur.first == location) {
-                return answer;
-            }
-            //아니면 우선순위 뽑아줌
-            q.pop();
+        //같이 크거나 같다면 
+        if (pq.top() <= q.front().first) {
+            // 원하는 위치까지 같다면
+            if(location == q.front().second)
+                //반복문 중단
+                break;
+            //위치가 다르다면
+            order++;
             pq.pop();
-            //순번도 증가
-            answer++;
+            q.pop();
         }
-        //최하단으로 이동
+        //작다면
         else {
-            q.push(cur);
+            //큐를 회전시킴
+            q.push(q.front());
             q.pop();
         }
     }
+    
+    //정답 교체
+    answer = order;
+    
+    //반환
+    return answer;
 }
