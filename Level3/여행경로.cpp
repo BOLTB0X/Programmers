@@ -4,51 +4,56 @@
 
 using namespace std;
 
-//ÀÓ½Ã Á¤´ä
+//ì„ì‹œ ë²¡í„°
 vector<string> tmp;
 
-//±íÀÌ ¿ì¼± Å½»ö
-bool DFS(vector<vector<string>>& tickets, vector<bool>& visited, vector<string>& answer, string cur_ticket, int depth) {
-    //ÇöÀç Æ¼ÄÏ Á¤´ä º¤ÅÍ¿¡ »ğÀÔ
+//ê¸°ì¡´ DFSì—ì„œ ì²˜ëŸ¼ í•´ë‹¹ ë…¸ë“œë¡œ ì´ë™ì´ ì•„ë‹Œ
+//ë‹¤ìŒ ì—´ë¡œ íƒì‚¬ë¥¼ í•´ì•¼í•¨
+//ê·¸ëŸ¬ë¯€ë¡œ boolí˜• DFSì‚¬ìš©
+bool DFS(vector<vector<string>> &tickets, vector<bool> &visited, vector<string> &answer, string cur_ticket, int depth) {
+    //í˜„ì¬ í‹°ì¼“ ì„ì‹œ ë²¡í„°ì— ì‚½ì…
     tmp.push_back(cur_ticket);
-
-    //ÁøÇà ±íÀÌ°¡ ÀüÃ¼ Æ¼ÄÏº¤ÅÍÀÇ ±æÀÌ±îÁö µµ´ŞÇÏ¸é
+    
+    //ì „ì²´ í‹°ì¼“ë“¤ì˜ í–‰ ê¸¸ì´ë§Œí¼ ë„ë‹¬í•˜ë©´
     if (depth == tickets.size()) {
         answer = tmp;
         return true;
     }
-    //ÇöÀç Æ¼ÄÏÀ» ÇàÀ¸·Î Å½»ö ½ÃÀÛ
-    for (int i = 0; i < tickets.size(); ++i) {
-        //±× ÇàÀÇ Ã¹ ¹øÂ° ¿­ÀÌ »ç¿ë Æ¼ÄÏÀÌ°í ¹Ì¹æ¹®ÀÌ¸é
+    
+    //í˜„ì¬ í‹°ì¼“ ê° ë…¸ë“œ íƒìƒ‰
+    for (int i=0;i<tickets.size();++i) {
+        //í˜„ì¬ í‹°ì¼“ì„ ê°€ì§„ í–‰ì„ ì°¾ëŠ”ë‹¤ë©´
+        //ê±°ê¸°ë‹¤ ë¯¸ë°©ë¬¸
         if (tickets[i][0] == cur_ticket && !visited[i]) {
-            //¹æ¹® Ã³¸®
-            visited[i] = true;
-            //´Ù½Ã DFS·Î Å½»ö ½ÃÀÛ
-            bool is_success = DFS(tickets, visited, answer, tickets[i][1], depth + 1);
-            //ÁøÇàÀÌ °¡´É ÇÏ¸é ÂüÀ¸·Î °è¼Ó ÁøÇà
-            //false¸é Áß´Ü½ÃÅ´
+            //ë°©ë¬¸ì²˜ë¦¬
+            visited[i]=true;
+            //ë‹¤ìŒ ì—´ë¡œ DFSê°€ ê°€ëŠ¥í•œì§€
+            bool is_success = DFS(tickets,visited,answer,tickets[i][1],depth+1);
+            
+            //ê°€ëŠ¥í•˜ë©´ ì§„í–‰
             if (is_success)
                 return true;
-            visited[i] = false;
+            //ëª¨ë“  ê²½ìš°ì˜ ìˆ˜ë¥¼ íƒì‚¬ì´ë¯€ë¡œ
+            visited[i]=false;
         }
     }
-    //»©ÁÜ ¾È±×·¯¸é Áßº¹
+    //ì¤‘ë³µí—ˆìš©ì´ ì•„ë‹ˆë‹ˆ
     tmp.pop_back();
     return false;
 }
 
 vector<string> solution(vector<vector<string>> tickets) {
-    //Á¤´äº¤ÅÍ
+    //ì •ë‹µë²¡í„°
     vector<string> answer;
-
-    //¹æ¹®¸®½ºÆ® »ı¼º ¹× ÃÊ±âÈ­
-    vector<bool> visited(tickets.size(), false);
-
-    //¾ËÆÄºª ¼ø¼­·Î Á¤·Ä
-    sort(tickets.begin(), tickets.end());
-
-    //´Ù¸¥ DFS¶û ´Ù¸£°Ô »ç¿ë Æ¼ÄÏÀ» µé°í°£´Ù.
-    //Ç×»ó "ICN" °øÇ×¿¡¼­ Ãâ¹ß
-    DFS(tickets, visited, answer, "ICN", 0);
+    
+    //ë°©ë¬¸ë²¡í„° ìƒì„± ë° ì´ˆê¸°í™”
+    vector<bool> visited(tickets.size(),false);
+    
+    //ì•ŒíŒŒë²³ ìˆœìœ¼ë¡œ ë°©ë¬¸ì´ë¯€ë¡œ
+    sort(tickets.begin(),tickets.end());
+    
+    //DFSë¡œ ê³µí•­ ìˆœíšŒ
+    DFS(tickets,visited,answer,"ICN",0);
+    
     return answer;
 }
