@@ -26,6 +26,7 @@ bool is_trans(string a, string b) {
     return true;
 }
 
+//깊이 우선 탐색
 void DFS(vector<string> &words, vector<bool> &visited, string start, string target, int depth) {
     //탈출조건
     if (start == target) {
@@ -57,11 +58,10 @@ int solution(string begin, string target, vector<string> words) {
     //DFS호출
     DFS(words,visited,begin,target,0);
     
-    //타겟을 찾지 못했다면
-    if (result == 51) 
-        answer=0;
-    //아니면
-    else
-        answer = result;
+    //타겟을 찾았다면
+    if (result != 51) 
+        answer=result;
+    
+    //정답 반환
     return answer;
 }
