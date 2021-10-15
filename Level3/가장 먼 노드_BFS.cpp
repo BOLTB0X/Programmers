@@ -31,11 +31,13 @@ int BFS(vector<int> graph[], vector<int>& dist) {
 
             //진행할 노드에 거리정보 저장
             dist[next] = dist[cur] + 1;
-            q.push(next);
-
+            
             //가장 큰 거리인지 체크
             if (dist[next] > max_dist)
                 max_dist = dist[next];
+            
+            //진행을 위한 큐 삽입
+            q.push(next);
         }
     }
     //가장 큰 거리 반환
