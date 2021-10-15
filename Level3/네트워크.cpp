@@ -7,6 +7,7 @@ using namespace std;
 void DFS(vector<vector<int>> &computers, vector<bool> &visited,int start) {
     visited[start]=true;
     //행 길이와 열 길이가 같으므로
+    //인접행렬
     for (int i=0;i<computers.size();++i) {
         //재방문인 경우
         if (visited[i])
