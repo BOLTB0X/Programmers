@@ -31,9 +31,9 @@ int solution(string numbers) {
     vector<int> per;
     do {
         string tmp = "";
-        for (int i = 0; i <= v.size(); i++) {
+        for (int i = 0; i < v.size(); i++) {
             //만들 수 있는 모든 수를 per에 삽입
-            tmp.push_back(v[i]);
+            tmp += v[i];
             per.push_back(stoi(tmp));
         }
     } while (next_permutation(v.begin(), v.end()));
