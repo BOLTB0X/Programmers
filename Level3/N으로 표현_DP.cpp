@@ -7,35 +7,35 @@ using namespace std;
 int soultion(int N, int number) {
 	int answer = 0;
 
-	//Á¤·ÄÇÒ ÇÊ¿äµµ ¾ø°í Áßº¹°ª Á¦°ÅÇØ¾ßÇÏ¹Ç·Î
+	//ì •ë ¬í•  í•„ìš”ë„ ì—†ê³  ì¤‘ë³µê°’ ì œê±°í•´ì•¼í•˜ë¯€ë¡œ
 	unordered_set<int> dp[8];
 
 	int tot = 0;
-	//°¢ N, NN, NNN... dp ³Ö¾îÁÜ
+	//ê° N, NN, NNN... dp ë„£ì–´ì¤Œ
 	for (int i = 0; i < 8; ++i) {
 		tot = 10 * tot + N;
-		//Áï NÀÇ °¹¼ö¸¦ »ğÀÔ
+		//ì¦‰ Nì˜ ê°¯ìˆ˜ë¥¼ ì‚½ì…
 		dp[i].insert(tot);
 	}
 
-	//ºĞÇÒ Å½»ö
+	//ë¶„í•  íƒìƒ‰
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < i; ++j) {
-			//°¢ nÀÇ °³¼ö°¡ µé¾î°£ °Íµé·Î ¿¬»ê
+			//ê° nì˜ ê°œìˆ˜ê°€ ë“¤ì–´ê°„ ê²ƒë“¤ë¡œ ì—°ì‚°
 			for (int a1 : dp[j]) {
 				for (int a2 : dp[i - j - 1]) {
 					dp[i].insert(a1 + a2);
 					dp[i].insert(a1 - a2);
 					dp[i].insert(a1 * a2);
-					//0ÀÏ ¶§ ³ª´©¸é ¾ÈµÇ¹Ç·Î
+					//0ì¼ ë•Œ ë‚˜ëˆ„ë©´ ì•ˆë˜ë¯€ë¡œ
 					if (a2 != 0)
-						dp[i].insert(a1 / a2);
+						dp[i].insert((int)a1 / a2);
 				}
 			}
 		}
 	}
 
-	//dp¾È¿¡ number°¡ µé¾ú´ÂÁö Ã¼Å©
+	//dpì•ˆì— numberê°€ ë“¤ì—ˆëŠ”ì§€ ì²´í¬
 	for (int i = 0; i < 8; ++i) {
 		if (dp[i].find(number) != dp[i].end()) {
 			answer = i + 1;
@@ -43,6 +43,6 @@ int soultion(int N, int number) {
 		}
 	}
 	
-	//Á¤´ä ¹İÈ¯
+	//ì •ë‹µ ë°˜í™˜
 	return answer;
 }
