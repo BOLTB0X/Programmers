@@ -27,23 +27,21 @@ string get_binary(int n) {
         n /= 2;
     }
     //연산 특성상 이진수가 뒤집어져 있으므로 다시 뒤집음
-    for (int i = tmp.length() - 1; i >= 0; i--) {
-        bb += tmp[i];
+    for (int i = res.length() - 1; i >= 0; i--) {
+        bb += res[i];
     }
-    return res;
+    return bb;
 }
 
 vector<int> solution(string s) {
     vector<int> answer;
     int cnt = 0;
-    while (1) {
-        //타겟인지 검사
-        if (s == "1")
-            break;
-        //아니므로 연산 시작
+    while (s != "1") {
+        //연산 시작
         cnt++;
         s = get_binary(get_s_len(s));
     }
+    
     answer.push_back(cnt);
     answer.push_back(zero_cnt);
     return answer;
