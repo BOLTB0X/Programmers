@@ -22,6 +22,7 @@ int solution(vector<vector<int>> triangle) {
         dp[i] = new int[size+1];
     }
     //초기화
+    //dp을 1부터 쓰기때문 꼭 초기화 해줘야함
     for (int i=0;i<=size;++i) {
         for (int j=0; j<=size;++j) {
             dp[i][j]=0;
