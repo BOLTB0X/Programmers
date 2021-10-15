@@ -25,6 +25,7 @@ string solution(vector<int> numbers) {
     for (int i=0;i<v.size();++i)
         answer += v[i];
     
+    //마지막 체크
     //만약 맨 앞자리가 0이면
     if (answer[0] == '0')
         return "0";
