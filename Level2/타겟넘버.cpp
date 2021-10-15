@@ -5,7 +5,7 @@ using namespace std;
 //DFS를 사용하기 때문에 전역 result
 int result=0;
 
-//깊이 우선 탐색
+//깊이 우선 탐색을 이용한 백트래킹
 void DFS(vector<int> &numbers, int target, int tot, int depth) {
     //numbers벡터까지 도달한다면 
     if (depth == numbers.size()) {
