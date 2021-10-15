@@ -21,6 +21,7 @@ bool DFS(vector<vector<string>> &tickets, vector<bool> &visited, vector<string> 
     }
     
     //현재 티켓 각 노드 탐색
+    //기존 DFS랑 다르게 왔다리 갔다리
     for (int i=0;i<tickets.size();++i) {
         //현재 티켓을 가진 행을 찾는다면
         //거기다 미방문
