@@ -49,6 +49,7 @@ int solution(vector<int> citations) {
         if (citations[i] >= h_idx) {
             answer=h_idx;
             //H-idx를 알았으니
+            //중단
             break; 
             //안그럼 계속 작아짐
         }
