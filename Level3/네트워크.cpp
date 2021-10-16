@@ -34,8 +34,6 @@ int solution(int n, vector<vector<int>> computers) {
             answer++;
             //DFS호출
             DFS(computers,visited,i);
-            //다시 미방문 처리
-            visited[i]=false;
         }
     }
     return answer;
