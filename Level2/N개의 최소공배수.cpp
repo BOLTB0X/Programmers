@@ -1,23 +1,26 @@
 #include <string>
 #include <vector>
+
 using namespace std;
 
-//2°³ÀÇ ÃÖ´ë °ø¾à¼ö ÇÔ¼ö
+//ìµœëŒ€ê³µì•½ìˆ˜
 int gcd(int a, int b) {
-    if (a % b == 0) return b;
-    else return gcd(b, a % b);
+    if (a%b == 0)
+        return b;
+    return gcd(b,a%b);
 }
 
-//2°³ÀÇ ÃÖ¼Ò °ø¹è¼ö ÇÔ¼ö
+//ìµœì†Œê³µë°°ìˆ˜
 int lcm(int a, int b) {
-    return a * b / gcd(a, b);
+    return (a*b / gcd(a,b));
 }
 
 int solution(vector<int> arr) {
     int answer = arr[0];
     
-    for (int i=1;i<arr.size();i++) {
-        answer = lcm(answer, arr[i]);
-    }
+    //ìˆœì°¨ì ìœ¼ë¡œ ë¹„êµ
+    for (int i=1; i<arr.size(); ++i) 
+        answer = lcm(answer,arr[i]);
+    
     return answer;
 }
