@@ -61,7 +61,7 @@ int solution(int n, vector<vector<int>> edge) {
     int answer = 0;
 
     //무향 그래프 생성
-    vector<int> graph[20001];
+    vector<vector<int>> graph(edge.size()+1); 
     //거리정보를 담는 벡터 생성 및 -1로 초기화
     vector<int> dist(edge.size() + 1, -1);
 
