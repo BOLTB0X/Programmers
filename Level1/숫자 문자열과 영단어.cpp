@@ -6,7 +6,7 @@ using namespace std;
 
 map<string, string> trans;
 
-//¼³Á¤
+//ì„¤ì •
 void setting_trans(void) {
     trans["zero"] = "0";
     trans["one"] = "1";
@@ -28,21 +28,22 @@ int solution(string s) {
     string idx = "";
     string result = "";
 
-    //¹®ÀÚ¿­ Å½»ö
+    //ë¬¸ìì—´ íƒìƒ‰
     for (int i = 0; i < s.length(); ++i) {
-        //Á¤¼öÀÌ¸é
+        //ì •ìˆ˜ì´ë©´
         if (isdigit(s[i]))
             result += s[i];
         else {
             idx += s[i];
-            //idx°¡ ¼ıÀÚ³×ÀÓÀÌ µÇ¸é
+            //idxê°€ ìˆ«ìë„¤ì„ì´ ë˜ê³ 
+            //ì¡´ì¬í•˜ë©´
             if (trans[idx] != "") {
                 result += trans[idx];
                 idx = "";
             }
         }
     }
-    //¹®ÀÚ¿­ Á¤¼ö·Î º¯È¯
+    //ë¬¸ìì—´ ì •ìˆ˜ë¡œ ë³€í™˜
     answer = stoi(result);
     return answer;
 }
