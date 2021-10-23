@@ -1,99 +1,71 @@
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-void swap(int* a, int* b) {
-    int* tmp = a;
-    a = b;
-    b = tmp;
+//0ì˜ ê°œìˆ˜ ë°˜í™˜
+int get_zero_count(vector<int>& lottos) {
+    int cnt = 0;
+    for (int i = 0; i < lottos.size(); ++i)
+        if (lottos[i] == 0)
+            cnt++;
+    return cnt;
 }
 
-void quicksort(vector<int>& arr, int start, int end) {
-    if (start >= end) 
-        return; //¿ø¼Ò°¡ 1°³ÀÎ °æ¿ì
-    int pivot = start; //ÇÇ¹şÀº Ã¹ ¹øÂ° ¿ø¼Ò
-    int left = start + 1;
-    int right = end;
-    while (left <= right) {
-        //ÇÇ¹şº¸´Ù Å« µ¥ÀÌÅÍ¸¦ Ã£À» ¶§±îÁö ¹İº¹
-        while (left <= end && arr[left] <= arr[pivot]) 
-            left++;
-        // ÇÇ¹şº¸´Ù ÀÛÀº µ¥ÀÌÅÍ¸¦ Ã£À» ¶§±îÁö ¹İº¹
-        while (right > start && arr[right] >= arr[pivot]) 
-            right--;
-        // ¾ù°¥·È´Ù¸é ÀÛÀº µ¥ÀÌÅÍ¿Í ÇÇ¹şÀ» ±³Ã¼
-        if (left > right) 
-            swap(arr[pivot], arr[right]);
-        // ¾ù°¥¸®Áö ¾Ê¾Ò´Ù¸é ÀÛÀº µ¥ÀÌÅÍ¿Í Å« µ¥ÀÌÅÍ¸¦ ±³Ã¼
-        else 
-            swap(arr[left], arr[right]);
-    }
-    // ºĞÇÒ ÀÌÈÄ ¿ŞÂÊ ºÎºĞ°ú ¿À¸¥ÂÊ ºÎºĞ¿¡¼­ °¢°¢ Á¤·Ä ¼öÇà
-    quicksort(arr, start, right - 1);
-    quicksort(arr, right + 1, end);
-}
-
-//ÀÌÁøÅ½»ö ÀÌ¿ë
-bool is_target(vector<int>& arr, int target, int start, int end) {
-    while (start <= end) {
-        int mid = (start + end) / 2;
-        if (target == arr[mid])
-            return true;
-        else if (arr[mid] < target) 
-            start = mid + 1;
-        
-        else
-            end = mid - 1;
-    }
-    return false;
-}
-
-//0°¹¼ö Ä«¿îÆÃ
-int count_zero(vector<int>& arr) {
-    int zero_cnt = 0;
-    for (int i = 0; i < arr.size(); i++) {
-        if (arr[i] == 0)
-            zero_cnt++;
-    }
-    return zero_cnt;
+//ë“±ìˆ˜ ë°˜í™˜ í•¨ìˆ˜
+int get_rank(int n) {
+    //ê° ê²½ìš°ì˜ ìˆ˜ê°€ ëª‡ ìœ„ì— í•´ë‹¹í•˜ëŠ” ì§€ í™•ì¸
+    
+    //1ë“±ì¸ ê²½ìš°
+    if (n == 6) 
+        return 1;
+    //2ë“±ì¸ ê²½ìš°
+    else if (n == 5) 
+        return 2;
+    //3ë“±ì¸ ê²½ìš°
+    else if (n == 4) 
+        return 3;
+    //4ë“±ì¸ ê²½ìš°
+    else if (n == 3) 
+        return 4;
+    //5ë“±ì¸ ê²½ìš°
+    else if (n == 2) 
+        return 5;
+    //6ë“±ì¸ ê²½ìš°
+    else 
+        return 6;
 }
 
 vector<int> solution(vector<int> lottos, vector<int> win_nums) {
     vector<int> answer;
-    quicksort(win_nums, 0, win_nums.size() - 1);
+    //ë°©ë¬¸ë¦¬ìŠ¤íŠ¸
+    vector<bool> visited(lottos.size(), false);
+    
+    //ìµœì•…ì˜ ê²½ìš°
     int min_cnt = 0;
-    for (int i = 0; i < lottos.size(); i++) {
-        if (is_target(win_nums, lottos[i], 0, win_nums.size() - 1))
-            min_cnt++;
-    }
-    int max_cnt = min_cnt + count_zero(lottos);
 
-    if (max_cnt == 6)
-        answer.push_back(1);
-    else if (max_cnt == 5)
-        answer.push_back(2);
-    else if (max_cnt == 4)
-        answer.push_back(3);
-    else if (max_cnt == 3)
-        answer.push_back(4);
-    else if (max_cnt == 2)
-        answer.push_back(5);
-    else if (max_cnt <= 1)
-        answer.push_back(6);
-    else if (max_cnt <= 1)
-        answer.push_back(6);
-    if (min_cnt == 6)
-        answer.push_back(1);
-    else if (min_cnt == 5)
-        answer.push_back(2);
-    else if (min_cnt == 4)
-        answer.push_back(3);
-    else if (min_cnt == 3)
-        answer.push_back(4);
-    else if (min_cnt == 2)
-        answer.push_back(5);
-    else if (min_cnt <= 1)
-        answer.push_back(6);
+    //ì´ì§„íƒìƒ‰ì„ ìœ„í•œ ì˜¤ë¦„ì°¨ìˆœì •ë ¬
+    sort(lottos.begin(), lottos.end());
+    
+    //ëª‡ê°œ ë§ëŠ” ì§€ í™•ì¸
+    for (int i = 0; i < lottos.size(); ++i) {
+        //í˜„ì¬ ë¡œë˜ ë²ˆí˜¸ê°€ ë‹¹ì²¨ë²ˆí˜¸ì— ëª‡ ê°œìˆëŠ”ì§€ í™•ì¸
+        for (int j = 0; j < win_nums.size(); ++j) {
+            if (!visited[i] && lottos[i] == win_nums[j]) {
+                min_cnt++;
+                //ì¤‘ë³µí•  ê²½ìš° ëŒ€ë¹„
+                visited[i] = true;
+            }
+        }
+    }
+
+    //ê°€ì¥ ì¢‹ì€ ê²½ìš°
+    //ì¦‰ ë‚¨ì•„ìˆëŠ” ê²ƒë“¤ë„ ë§ê³  ì§€ì›Œì§„ ê°¯ìˆ˜ ë˜í•œ ë§ì„ ê²½ìš°
+    int max_cnt = min_cnt + get_zero_count(lottos);
+
+    answer.push_back(get_rank(max_cnt));
+    answer.push_back(get_rank(min_cnt));
+
     return answer;
 }
