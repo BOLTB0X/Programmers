@@ -34,6 +34,7 @@ int solution(vector<int> priorities, int location) {
             pq.pop();
             q.pop();
         }
+        
         //작다면
         else {
             //큐를 회전시킴
