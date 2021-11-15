@@ -3,43 +3,42 @@
 
 using namespace std;
 
-//¼öÆ÷ÀÚ Á¤´ä ÆĞÅÏ
-int supoja1[5] = {1, 2, 3, 4, 5};
-int supoja2[8] = { 2, 1, 2, 3, 2, 4, 2, 5 };
-int supoja3[10] = { 3, 3, 1, 1, 2, 2, 4, 4, 5, 5 };
+//ìˆ˜í¬ìë“¤ íŒ¨í„´
+int style1[5] = { 1,2,3,4,5 };
+int style2[8] = { 2,1,2,3,2,4,2,5 };
+int style3[10] = { 3,3,1,1,2,2,4,4,5,5 };
 
-//ÃÖ´ë
+//ìµœëŒ“ê°’ ë°˜í™˜
 int max(int a, int b) {
     return a > b ? a : b;
 }
 
 vector<int> solution(vector<int> answers) {
-    vector<int> result;
+    vector<int> answer;
+    //ìˆœì„œëŒ€ë¡œ ìˆ˜í¬ìë“¤ì˜ ì ìˆ˜
     int score[3] = { 0, };
-    int max_score = 0;
-    
-    //Á¤´äº¤ÅÍ¸¸Å­ ¼øÈ¸
+    int max_score;
+
+    //ì •ë‹µì„ ì°¨ë¡€ë¡œ ìˆ˜í¬ìë“¤ì˜ ìŠ¤íƒ€ì¼ê³¼ ë¹„êµí•˜ë©°
+    //ì ìˆ˜ë¥¼ ë§¤ê¹€
     for (int i = 0; i < answers.size(); ++i) {
-        //i%5,8,10ÆĞÅÏ °°À¸¸é °¢ À§Ä¡¿¡ Ä«¿îÆ®
-        if (answers[i] == supoja1[i % 5])
+        //ê° ìŠ¤íƒ€ì¼ì— ë§ë‹¤ë©´
+        if (answers[i] == style1[i % 5])
             score[0]++;
-        if (answers[i] == supoja2[i % 8])
+        if (answers[i] == style2[i % 8])
             score[1]++;
-        if (answers[i] == supoja3[i % 10])
+        if (answers[i] == style3[i % 10])
             score[2]++;
     }
 
-    //¼ÂÁß ÃÖ°í Á¡¼ö°¡ ¸îÁ¡ÀÎÁö
+    //ì…‹ì¤‘ ìµœëŒ“ê°’
     max_score = max(max(score[0], score[1]), score[2]);
+
+    //ë¯¸ì§€ë§‰ìœ¼ë¡œ ë¬¸ì œì¡°ê±´ì— ë§ê²Œ
+    for (int i = 0; i < 3; ++i)
+        if (max_score == score[i])
+            answer.push_back(i + 1);
     
-    //Á¤´äº¤ÅÍ¿¡ »ğÀÔ
-    for (int i = 0; i < 3; ++i) {
-        //ÃÖ°íÁ¡¼öÀÚ¸¦ Ã£À¸¸é
-        if (max_score == score[i]) {
-            //idx+1ÀÌ¹Ç·Î
-            result.push_back(i + 1);
-        }
-    }
-    //Á¤´ä ¹İÈ¯
-    return result;
+    //ë°˜í™˜
+    return answer;
 }
