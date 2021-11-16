@@ -1,21 +1,31 @@
-#include <algorithm>
+#include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 int solution(vector<int> people, int limit) {
     int answer = 0;
-    sort(people.begin(),people.end()); //��������
-    int head = 0;
-    int tail = people.size() - 1;
-    while (head <= tail) {
-        if (people[head] + people[tail] <= limit) {
-            head += 1;
-            tail -= 1;
+    
+    //오름차순 정렬
+    sort(people.begin(), people.end());
+    
+    //이분탐색처럼 스타트와 끝을 정의
+    int start = 0;
+    int end = people.size() - 1;
+
+    //엇갈리기 전까지
+    while (start <= end) {
+        //둘다 데려가는 경우
+        if (people[start] + people[end] <= limit) {
+            start++;
+            end--;
         }
+        //한놈만
         else
-            tail -= 1;
+            end--;
         answer++;
     }
+
     return answer;
 }
