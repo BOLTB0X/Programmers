@@ -1,14 +1,26 @@
 def solution(people, limit):
     answer = 0
+    
+    #정렬
     people.sort()
-    fir=0 #가장 가벼운 놈
-    last=len(people)-1 #가장 무거운 놈
-    while fir<=last:
-        answer+=1 #일단 카운팅
-        if people[fir]+people[last]<=limit:
-            fir+=1
-        last-=1 #제한선을 비교해서 맞든 안맞든 무거운넘은 대려간다
+    
+    #이분탐색처럼
+    start = 0
+    end = len(people) - 1
+    
+    #엇갈리기 전까지
+    while (start <= end):
+        #두명 데리고 가기
+        if (people[start] + people[end] <= limit):
+            start += 1
+            end -= 1
+        
+        #한명만
+        else:
+            end -= 1
+        
+        #카운트
+        answer +=1 
+    
+    #반환
     return answer
-people=[70, 50, 80, 50]
-limit=100
-print(solution(people,limit))
