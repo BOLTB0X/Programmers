@@ -3,7 +3,7 @@
 
 using namespace std;
 
-//ÃÖ¼Ú°ª ¹İÈ¯
+//ìµœì†Ÿê°’ ë°˜í™˜
 int min(int a, int b) {
     return a < b ? a : b;
 }
@@ -11,39 +11,40 @@ int min(int a, int b) {
 int solution(string s) {
     int answer = s.length();
 
-    //¹®ÀÚ¿­ Å½»ö
-    //¹®ÀÚ¿­ ¾ĞÃàÀÌ¹Ç·Î n/2¸¸Å­ ¸¸ ÂÉ°³¾ßÇÔ
+    //ë¬¸ìì—´ íƒìƒ‰
+    //ë¬¸ìì—´ ì••ì¶•ì´ë¯€ë¡œ n/2ë§Œí¼ ë§Œ ìª¼ê°œì•¼í•¨
     for (int i = 1; i <= s.length() / 2; i++) {
-        //ÀÓ½Ã¿Í ¾ĞÃà
+        //ì„ì‹œì™€ ì••ì¶•
         string tmp = "", convert = "";
 
         int cnt = 1;
-        //substr·Î i¾¿ Àß¶óº½
+        //substrë¡œ iì”© ì˜ë¼ë´„
         tmp = s.substr(0, i);
-
+        
+        //iì”© ë°˜ë³µë˜ëŠ”ê²Œ ëª‡ê°œì¸ì§€ ì°¨ë¡€ë¡œ í™•ì¸
         for (int j = i; j < s.length(); j += i) {
             if (tmp == s.substr(j, i))
                 cnt++;
             else {
-                //2 ÀÌ»óÀÌ¸é
+                //2 ì´ìƒì´ë©´
                 if (cnt > 1)
                     convert += to_string(cnt);
                 convert += tmp;
-                //¹İº¹µÇ´Â °ÍÀ» ¹Ù²ã¾ß ÇÏ¹Ç·Î
+                //ë°˜ë³µë˜ëŠ” ê²ƒì„ ë°”ê¿”ì•¼ í•˜ë¯€ë¡œ
                 tmp = s.substr(j, i);
-                //ÃÊ±âÈ­
+                //ì´ˆê¸°í™”
                 cnt = 1;
             }
         }
-        //2 ÀÌ»óÀÌ¸é
+        //2 ì´ìƒì´ë©´
         if (cnt > 1)
             convert += to_string(cnt);
         convert += tmp;
 
-        //±æÀÌ°¡ ÀÛÀº °ªÀ¸·Î º¯°æ
+        //ê¸¸ì´ê°€ ì‘ì€ ê°’ìœ¼ë¡œ ë³€ê²½
         answer = min(answer, convert.length());
     }
 
-    //¹İÈ¯
+    //ë°˜í™˜
     return answer;
 }
