@@ -3,35 +3,36 @@
 
 using namespace std;
 
-//»óÇÏÁÂ¿ì
+//ì²´í¬ìš©
+bool flag;
+
+//ìƒí•˜ì¢Œìš°
 const int dy[4] = { -1,1,0,0 };
 const int dx[4] = { 0,0,-1,1 };
 
-//Ã¼Å©¿ë
-bool flag;
-
-//±íÀÌ¿ì¼±Å½»ö
+//ê¹Šì´ìš°ì„ íƒìƒ‰
+//2ë§Œ íƒìƒ‰í•˜ì—¬ ê±°ë¦¬ë‘ê¸° ë˜ì—ˆëŠ”ì§€ ì²´í¬
 void DFS(vector<string>& place, vector<vector<bool>>& visited, int y, int x, int depth) {
-    //¼øÂ÷ÀûÀ¸·Î Å½»ö
+    //ìˆœì°¨ì ìœ¼ë¡œ íƒìƒ‰
     for (int dir = 0; dir < 4; ++dir) {
-        //±æÀÌ°¡ 2ÀÌ´ø°¡ ÂüÀÌ¸é
-        if (depth == 2 || flag)
+        //íƒˆì¶œ
+        if (depth == 2 || !flag)
             return;
 
         int ny = y + dy[dir];
         int nx = x + dx[dir];
 
-        //¹üÀ§ ³»
+        //ë²”ìœ„ë‚´
         if (ny >= 0 && ny < 5 && nx >= 0 && nx < 5) {
-            //ÁøÇà
             if (!visited[ny][nx] && place[ny][nx] != 'X') {
-                //ÀÚ¸®¸é
+                //ê±°ë¦¬ë‘ê¸° ì‹¤íŒ¨
                 if (place[ny][nx] == 'P') {
-                    flag = true;
+                    flag = false;
                     return;
                 }
                 else {
                     visited[ny][nx] = true;
+                    //DFSí˜¸ì¶œ
                     DFS(place, visited, ny, nx, depth + 1);
                 }
             }
@@ -43,32 +44,35 @@ void DFS(vector<string>& place, vector<vector<bool>>& visited, int y, int x, int
 vector<int> solution(vector<vector<string>> places) {
     vector<int> answer;
 
-    //°¢ ´ë±â½Ç 
+    //ì²´í¬í•  ëŒ€ê¸°ì‹¤
     for (auto& place : places) {
-        //¹æ¹®¸®½ºÆ® »ı¼º ¹× ÃÊ±âÈ­
+        //ëŒ€ê¸°ì‹¤ì´ ë°”ë€”ë•Œë§ˆë‹¤ ë°©ë¬¸ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
         vector<vector<bool>> visited(5, vector<bool>(5, false));
-        flag = false;
-        //°¢ ´ë±â½Ç Ä­À» È®ÀÎ
+        //ê±°ë¦¬ë‘ê¸°ë¥¼ ì§€ì¼°ìœ¼ë©´ ì°¸ ì•„ë‹ˆë©´ ê±°ì§“
+        flag = true;
+        //ì„ íƒëœ ëŒ€ê¸°ì‹¤ ì¢Œì„ë“¤ í™•ì¸
         for (int i = 0; i < place.size(); ++i) {
             for (int j = 0; j < place[i].size(); ++j) {
-                //¹Ì¹æ¹®ÀÌ°í ÁÂ¼®À» ¹ß°ßÇÏ¸é
-                if (!visited[i][j] && place[i][j] == 'P') {
+                //í™•ì¸ ì•ˆí•œ ì¢Œì„ì„ ë°œê²¬í•œë‹¤ë©´ 
+                if (place[i][j] == 'P' && !visited[i][j]) {
                     visited[i][j] = true;
                     DFS(place, visited, i, j, 0);
                 }
-                //°Å¸®µÎ±â¸¦ ÁöÅ°Áö ¾Ê¾ÒÀ¸¹Ç·Î
-                if (flag) {
+                //DFSí˜¸ì¶œ í›„ ê±°ë¦¬ë‘ê¸°ë¥¼ ì•ˆì§€ì¼°ë‹¤ë©´
+                if (!flag) {
                     answer.push_back(0);
                     break;
                 }
             }
-            if (flag)
+            //ê±°ë¦¬ë‘ê¸°ë¥¼ ì•ˆì§€ì¼°ë‹¤ë©´
+            if (!flag)
                 break;
         }
-        if (!flag)
+        //ì§€ì¼°ë‹¤ë©´
+        if (flag)
             answer.push_back(1);
     }
-    
-    //¹İÈ¯
+
+    //ë°˜í™˜
     return answer;
 }
