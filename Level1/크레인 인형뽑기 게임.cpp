@@ -8,27 +8,28 @@ int solution(vector<vector<int>> board, vector<int> moves) {
     int answer = 0;
     stack<int> basket;
 
-    //ÀÌµ¿ ¸í·É ÇÏ³ª¾¿ È®ÀÎ
+    //ì´ë™ ëª…ë ¹ í•˜ë‚˜ì”© í™•ì¸
     for (int i = 0; i < moves.size(); ++i) {
+        //ì—´ ê²°ì •
         int idx = moves[i] - 1;
-        for (int j = 0; j<board.size();++j) {
-            if (board[j][idx] != 0) {
-
-                //ºñ¾îÀÖÁö ¾Ê°í »ğÀÔÇÒ ÀÎÇü°ú ¹Ù±¸´Ï »ó´ÜÀÇ ÀÎÇüÀÌ °°´Ù¸é
-                if (!basket.empty() && basket.top() == board[j][idx]) {
+        //ê²©ìíŒ íƒì„¹
+        for (auto& b : board) {
+            //ì¸í˜• ë°œê²¬
+            if (b[idx] != 0) {
+                //ë“ì ì´ ê°€ëŠ¥í•œ ê²½ìš°
+                if (!basket.empty() && basket.top() == b[idx]) {
                     basket.pop();
-                    //µæÁ¡
                     answer += 2;
                 }
-                //»ğÀÔ
                 else
-                    basket.push(board[j][idx]);
-
-                board[j][idx] = 0;
+                    basket.push(b[idx]);
+                //ì¸í˜•ì„ êº¼ëƒˆìœ¼ë¯€ë¡œ
+                b[idx] = 0;
                 break;
             }
         }
+       
     }
-    //¹İÈ¯
+    //ë°˜í™˜
     return answer;
 }
