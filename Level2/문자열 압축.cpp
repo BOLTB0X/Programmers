@@ -1,12 +1,9 @@
 #include <string>
 #include <vector>
+//최솟값 반환 
+#define min(a,b) (a<b?a:b)
 
 using namespace std;
-
-//최솟값 반환
-int min(int a, int b) {
-    return a < b ? a : b;
-}
 
 int solution(string s) {
     int answer = s.length();
