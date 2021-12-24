@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 //최솟값 반환 
-#define min(a,b) (a<b?a:b)
+#define min(a, b) (a < b ? a : b)
 
 using namespace std;
 
