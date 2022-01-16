@@ -1,49 +1,50 @@
 #include <string>
 #include <vector>
-#include <map>
 
 using namespace std;
 
-map<string, string> trans;
-
-//설정
-void setting_trans(void) {
-    trans["zero"] = "0";
-    trans["one"] = "1";
-    trans["two"] = "2";
-    trans["three"] = "3";
-    trans["four"] = "4";
-    trans["five"] = "5";
-    trans["six"] = "6";
-    trans["seven"] = "7";
-    trans["eight"] = "8";
-    trans["nine"] = "9";
-    return;
+string trans(string& s) {
+    if (s == "zero")
+        return "0";
+    else if (s == "one")
+        return "1";
+    else if (s == "two")
+        return "2";
+    else if (s == "three")
+        return "3";
+    else if (s == "four")
+        return "4";
+    else if (s == "five")
+        return "5";
+    else if (s == "six")
+        return "6";
+    else if (s == "seven")
+        return "7";
+    else if (s == "eight")
+        return "8";
+    else if (s == "nine")
+        return "9";
+    else
+        return "-1";
 }
 
 int solution(string s) {
-    int answer = 0;
-    setting_trans();
-
-    string idx = "";
+    long long answer = 0;
     string result = "";
+    string idx = "";
 
-    //문자열 탐색
-    for (int i = 0; i < s.length(); ++i) {
-        //정수이면
+    for (long long i = 0; i < s.length(); ++i) {
         if (isdigit(s[i]))
             result += s[i];
         else {
             idx += s[i];
-            //idx가 숫자네임이 되고
-            //존재하면
-            if (trans[idx] != "") {
-                result += trans[idx];
+            string tmp = trans(idx);
+            if (tmp != "-1") {
+                result += tmp;
                 idx = "";
             }
         }
     }
-    //문자열 정수로 변환
-    answer = stoi(result);
+    answer = stoll(result);
     return answer;
 }
