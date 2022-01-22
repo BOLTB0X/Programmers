@@ -1,7 +1,5 @@
 #include <string>
 #include <vector>
-//최솟값 반환 
-#define min(a, b) (a < b ? a : b)
 
 using namespace std;
 
@@ -39,7 +37,7 @@ int solution(string s) {
         convert += tmp;
 
         //길이가 작은 값으로 변경
-        answer = min(answer, convert.length());
+        answer = answer < convert.length() ? answer : convert.length();
     }
 
     //반환
