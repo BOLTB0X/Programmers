@@ -9,19 +9,20 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
     queue<int> q;
     int size = progresses.size();
 
-    //ÀÏ ¹øÈ£ Å¥¿¡ Çª½¬
+    //ì¼ ë²ˆí˜¸ íì— í‘¸ì‰¬
     for (int i = 0; i < size; ++i)
         q.push(i);
     
-    //¿¬»ê ½ÃÀÛ
+    //ì—°ì‚° ì‹œì‘
     while (!q.empty()) {
         int cnt = 0;
-        //°è¼Ó ÁøµµÀ²À» ´õÇØÁÜ
+        
+        //ê³„ì† ì§„ë„ìœ¨ì„ ë”í•´ì¤Œ
         for (int i = 0; i < size; ++i)
             progresses[i] += speeds[i];
 
-        //¹èÆ÷°¡´ÉÇÑÁö Ã¼Å©
-        //ÃÖ»ó´ÜÀÌ ¹èÆ÷°¡´ÉÀÌ µÇ¾î¾ßÇÔ
+        //ë°°í¬ê°€ëŠ¥í•œì§€ ì²´í¬
+        //ìµœìƒë‹¨ì´ ë°°í¬ê°€ëŠ¥ì´ ë˜ì–´ì•¼í•¨
         while (!q.empty() && progresses[q.front()] >= 100) {
             cnt++;
             q.pop();
