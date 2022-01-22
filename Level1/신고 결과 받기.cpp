@@ -19,7 +19,7 @@ void init(int len) {
 
 vector<string> get_split(string report) {
     vector<string> v;
-    size_t pos = report.rfind(' ');
+    int pos = report.rfind(' ');
 
     v.push_back(report.substr(0, pos));
     v.push_back(report.substr(pos + 1));
@@ -36,7 +36,7 @@ void count_score(vector<string>& id_list, vector<string>& st) {
             col = i;
     }
 
-    //Áßº¹½Å°í ¹æÁö
+    //ì¤‘ë³µì‹ ê³  ë°©ì§€
     if (score[row][col] == 0) {
         score[row][col]++;
         sum[col]++;
@@ -47,9 +47,9 @@ void count_score(vector<string>& id_list, vector<string>& st) {
 
 vector<int> solution(vector<string> id_list, vector<string> report, int k) {
     vector<int> answer;
-    //ÆíÀÇ¿ë
+    //í¸ì˜ìš©
     int len = id_list.size();
-    //ÃÊ±âÈ­
+    //ì´ˆê¸°í™”
     init(len);
 
     for (int i = 0; i < report.size(); ++i) {
@@ -60,7 +60,7 @@ vector<int> solution(vector<string> id_list, vector<string> report, int k) {
     for (int i = 0; i < len; ++i) {
         int cnt = 0;
         for (int j = 0; j < len; ++j) {
-            //½Å°í 1¹øÇÏ°í ´©ÀûÈ½¼ö Á¶°Ç È®ÀÎ
+            //ì‹ ê³  1ë²ˆí•˜ê³  ëˆ„ì íšŸìˆ˜ ì¡°ê±´ í™•ì¸
             if (score[i][j] > 0 && sum[j] >= k) 
                 cnt++;
         }
