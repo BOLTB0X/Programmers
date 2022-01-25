@@ -17,11 +17,13 @@ int solution(vector<int> people, int limit) {
         if (people[front] + people[back] > limit) {
             back--;
         }
+        
         //둘다
         else {
             front++;
             back--;
         }
+        
         //카운트
         answer++;
     }
