@@ -6,7 +6,6 @@
 char* solution(const char* number, int k) {
     char* answer = (char*)malloc(sizeof(char) * strlen(number));
     memset(answer, 0, sizeof(char) * strlen(number));
-
     char max_num[1000001] = { 0, };
     int num_idx = 0;
 
@@ -28,7 +27,7 @@ char* solution(const char* number, int k) {
         start = max_idx + 1;
         max_num[num_idx++] = max_tmp;
     }
-
+    
     strcpy(answer, max_num);
     return answer;
 }
