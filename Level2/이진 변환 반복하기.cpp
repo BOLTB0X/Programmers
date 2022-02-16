@@ -2,47 +2,51 @@
 #include <vector>
 
 using namespace std;
-//0제거 횟수
-int zero_cnt = 0;
 
-//0을 제거한 이진수 문자열의 길이반환
-int get_s_len(string s) {
-    int len = 0;
-    for (int i = 0; i < s.length(); i++) {
-        //1의 갯수가 곧 길이
-        if (s[i] == '1')
-            len += 1;
-        else
-            zero_cnt += 1;
+int t_cnt = 0, z_cnt = 0;
+
+//길이 반환
+int get_len(string s) {
+    int ret = 0;
+    for (int i = 0; i < s.length(); ++i) {
+        if (s[i] == '0')
+            z_cnt++;
+        else if (s[i] == '1')
+            ret++;
     }
-    return len;
+
+    return ret;
 }
 
-//이진수로 변환
-string get_binary(int n) {
-    string res = "", bb = "";
-    while (n >= 1) {
-        int r = n % 2;
-        res += char(r + '0');
-        n /= 2;
+//2진수 반환
+string get_bin(int len) {
+    string tmp = "", ret = "";
+
+    while (len > 0) {
+        int r = len % 2;
+        tmp += (char)(r + '0');
+        len /= 2;
     }
-    //연산 특성상 이진수가 뒤집어져 있으므로 다시 뒤집음
-    for (int i = res.length() - 1; i >= 0; i--) {
-        bb += res[i];
-    }
-    return bb;
+
+    for (int i = tmp.length() - 1; i >= 0; --i)
+        ret += tmp[i];
+
+    return ret;
 }
 
 vector<int> solution(string s) {
     vector<int> answer;
-    int cnt = 0;
-    while (s != "1") {
-        //연산 시작
-        cnt++;
-        s = get_binary(get_s_len(s));
+
+    while (1) {
+        //탈출조건
+        if (s == "1")
+            break;
+
+        t_cnt++;
+        s = get_bin(get_len(s));
     }
-    
-    answer.push_back(cnt);
-    answer.push_back(zero_cnt);
+
+    answer.push_back(t_cnt);
+    answer.push_back(z_cnt);
     return answer;
 }
