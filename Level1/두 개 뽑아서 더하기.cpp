@@ -1,10 +1,9 @@
 #include <string>
 #include <vector>
-#include <set>
 
 using namespace std;
 
-//½º¿ÍÇÎ
+//ìŠ¤ì™€í•‘
 void swap(int* a, int* b) {
     int* tmp = a;
     a = b;
@@ -12,47 +11,65 @@ void swap(int* a, int* b) {
     return;
 }
 
-//ÄüÁ¤·Ä
-void quicksort(vector<int>& arr, int start, int end) {
-    //¿ø¼Ò°¡ 1°³ÀÏ °æ¿ì
+//í€µì •ë ¬
+void q_Sort(vector<int>& arr, int start, int end) {
+    //ì›ì†Œê°€ 1ê°œì¼ ê²½ìš°
     if (start >= end)
         return;
     int pivot = start;
     int left = pivot + 1;
     int right = end;
-    //Å½»ö½ÃÀÛ
+    //íƒìƒ‰ì‹œì‘
     while (left <= right) {
-        //ÇÇ¹şº¸´Ù Å«°ªÀ» ¸¸³¯¶§±îÁö ¹İº¹
+        //í”¼ë²—ë³´ë‹¤ í°ê°’ì„ ë§Œë‚ ë•Œê¹Œì§€ ë°˜ë³µ
         while (left <= end && arr[left] <= arr[pivot])
             left++;
-        //ÇÇ¹şº¸´Ù ÀÛÀº °ªÀ» ¸¸³¯¶§±îÁö ¹İº¹
+        //í”¼ë²—ë³´ë‹¤ ì‘ì€ ê°’ì„ ë§Œë‚ ë•Œê¹Œì§€ ë°˜ë³µ
         while (right > start && arr[right] >= arr[pivot])
             right--;
-        //¾ù°¥·È´Ù¸é
+        //ì—‡ê°ˆë ¸ë‹¤ë©´
         if (left > right)
             swap(arr[right], arr[pivot]);
         else
             swap(arr[left], arr[right]);
     }
-    quicksort(arr, start, right - 1);
-    quicksort(arr, right + 1, end);
+    q_Sort(arr, start, right - 1);
+    q_Sort(arr, right + 1, end);
     return;
+}
+
+//ì›ì†Œì— ìˆëŠ”ì§€
+bool is_Ele_in_arr(vector<int>& v, int target) {
+    if (v.size() == 0)
+        return true;
+    
+    int size = v.size();
+    for (int i = 0; i < size; ++i) {
+        if (target == v[i])
+            return false;
+    }
+    
+    return true;
 }
 
 vector<int> solution(vector<int> numbers) {
     vector<int> answer;
-    for (int i = 0; i < numbers.size(); i++) {
-        for (int j = i + 1; j < numbers.size(); j++) {
-            int tmp_value = numbers[i] + numbers[j];
-            bool check = false;
-            for (int k = 0; k < answer.size(); k++) {
-                if (tmp_value == answer[k])
-                    check = true;
+    int size = numbers.size(), ele;
+    bool flag;
+    
+    for (int i = 0; i < size; ++i) {
+        for (int j = i + 1; j < size; ++j) {
+            ele = numbers[i] + numbers[j];
+            flag = 1;
+            if (!is_Ele_in_arr(answer, ele)) {
+                flag = 0;
             }
-            if (!check)
-                answer.push_back(tmp_value);
+            if (flag)
+            answer.push_back(ele);
         }
+        
     }
-    quicksort(answer, 0, answer.size() - 1);
+    
+    q_Sort(answer, 0, answer.size() - 1);
     return answer;
 }
