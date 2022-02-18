@@ -2,19 +2,14 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-// absolutes_len¿∫ πËø≠ absolutes¿« ±Ê¿Ã¿‘¥œ¥Ÿ.
-// signs_len¿∫ πËø≠ signs¿« ±Ê¿Ã¿‘¥œ¥Ÿ.
 int solution(int absolutes[], size_t absolutes_len, bool signs[], size_t signs_len) {
     int answer = 0;
-    
-    for (int i = 0; i < absolutes_len; ++i) {
-        //æÁºˆ¿Ãπ«∑Œ
-        if (signs[i] == true)
+    for (int i = 0;i < absolutes_len;++i) {
+        //ÏñëÏàò
+        if (signs[i] == true) 
             answer += absolutes[i];
-        
-        //¿Ωºˆ¿Ãπ«∑Œ
         else
             answer -= absolutes[i];
-    }
+    } 
     return answer;
 }
