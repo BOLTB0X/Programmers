@@ -2,63 +2,61 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-int board[1001][1001];
+int board[1000][1000];
+//ë‹¬íŒ½ì´ ë°©í–¥
+const int dy[3] = {1, 0, -1};
+const int dx[3] = {0, 1, -1};
 
-const int dy[3] = { 1, 0, -1 };
-const int dx[3] = { 0, 1, -1 };
-
-//ÃÊ±âÈ­
+//ì´ˆê¸°í™”
 void init(int n) {
-    for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= n; ++j)
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) 
             board[i][j] = 0;
     }
     return;
 }
 
-//¹üÀ§ Ã¼Å©
+//ë²”ìœ„ ì²´í¬
 int in_Range(int y, int x, int n) {
-    return 1 <= y && y <= n && 1 <= x && x <= n;
+    return 0 <= y && y < n && 0 <= x && x < n;
 }
 
 int* solution(int n) {
-    int* answer = (int*)calloc(n * (n + 1) / 2, sizeof(int) * 1001);
-    int idx = 0;
-    int number = 1, cy = 1, cx = 1;
-
-    //º¸µå ÃÊ±âÈ­
+    //ê¸°ë³¸ ì„¸íŒ…
+    int number = 1, y = 0, x = 0;
     init(n);
-
-    //´ŞÆØÀÌ »ï°¢Çü ÇüÅÂ·Î °ª ÇÒ´ç
-    while (in_Range(cy, cx, n) == 1 && board[cy][cx] == 0) {
+    
+    //ë°˜ë³µë¬¸ìœ¼ë¡œ ë‹¬íŒ½ì´ ë°©ì‹ìœ¼ë¡œ ì§„í–‰
+    while(in_Range(y, x, n) == 1 && board[y][x] == 0) {
         for (int dir = 0; dir < 3; ++dir) {
-            //Å»Ãâ Á¶°Ç
-            if (in_Range(cy, cx, n) == 0 || board[cy][cx] != 0)
+            if (in_Range(y, x, n) == 0 || board[y][x] != 0)
                 break;
-
-            while (1) {
-                board[cy][cx] = number++;
-                int ny = cy + dy[dir];
-                int nx = cx + dx[dir];
-
+            
+            while(1) {
+                board[y][x] = number++;
+                int ny = y + dy[dir];
+                int nx = x + dx[dir];
+                
                 if (in_Range(ny, nx, n) == 0 || board[ny][nx] != 0) {
-                    cy += dy[(1 + dir) % 3];
-                    cx += dx[(1 + dir) % 3];
+                    y += dy[(1 + dir) % 3];
+                    x += dx[(1 + dir) % 3];
                     break;
                 }
-
-                cy = ny, cx = nx;
+                
+                y = ny, x = nx;
             }
         }
     }
-
-    //»ğÀÔ
-    for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= n; ++j) {
+    
+    int* answer = (int*)calloc(n * (n+1) / 2, sizeof(int));
+    int answer_idx = 0;
+    //ì •ë‹µ 
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
             if (board[i][j] != 0)
-                answer[idx++] = board[i][j];
+                answer[answer_idx++] = board[i][j];
         }
     }
-
+    
     return answer;
 }
