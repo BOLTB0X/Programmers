@@ -7,45 +7,44 @@ int t_cnt = 0, z_cnt = 0;
 
 //길이 반환
 int get_len(string s) {
-    int ret = 0;
-    for (int i = 0; i < s.length(); ++i) {
-        if (s[i] == '0')
+    int o_cnt = 0, size = s.length();
+    
+    for (int i = 0; i<size; ++i) {
+        if (s[i] == '1')
+            o_cnt++;
+        else
             z_cnt++;
-        else if (s[i] == '1')
-            ret++;
     }
-
-    return ret;
+    
+    return o_cnt;
 }
 
-//2진수 반환
+//이진변환 결과 반환
 string get_bin(int len) {
-    string tmp = "", ret = "";
-
-    while (len > 0) {
-        int r = len % 2;
-        tmp += (char)(r + '0');
-        len /= 2;
+    string tmp = "";
+    int number = len;
+    
+    while(number > 0) {
+        int r = number % 2;
+        tmp += ((char)r + '0');
+        number /= 2;
     }
-
-    for (int i = tmp.length() - 1; i >= 0; --i)
-        ret += tmp[i];
-
-    return ret;
+    
+    //뒤집어진 결과로 완성되지만 1인 결과확인과 길이를 구할 것이므로
+    //그냥 반환
+    return tmp;
 }
 
 vector<int> solution(string s) {
     vector<int> answer;
-
+    
+    string str = s;
     while (1) {
-        //탈출조건
-        if (s == "1")
+        if (str == "1")
             break;
-
+        str = get_bin(get_len(str));
         t_cnt++;
-        s = get_bin(get_len(s));
     }
-
     answer.push_back(t_cnt);
     answer.push_back(z_cnt);
     return answer;
