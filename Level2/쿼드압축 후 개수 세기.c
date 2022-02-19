@@ -4,10 +4,10 @@
 
 int z_cnt = 0, o_cnt = 0;
 
-//ºĞÇÒ Á¤º¹ ÀÌ¿ë
-void Compassion(int** arr, int y, int x, int size, int cmp) {
+void compassion(int** arr, int y, int x, int size, int cmp) {
     int half = size / 2, flag = 1;
-
+    
+    //ì¬ê·€ë¥¼ í™œìš©í•œ ë¶„í• íƒìƒ‰ì˜ íƒˆì¶œ ì¡°ê±´
     if (size < 2) {
         if (cmp == 1)
             o_cnt++;
@@ -15,10 +15,10 @@ void Compassion(int** arr, int y, int x, int size, int cmp) {
             z_cnt++;
         return;
     }
-
-    for (int i = y; i < y + size; ++i) {
+    
+    for (int i = y; i <  y + size; ++i) {
         for (int j = x; j < x + size; ++j) {
-            if (arr[i][j] != cmp) {
+            if (cmp != arr[i][j]) {
                 flag = 0;
                 break;
             }
@@ -26,9 +26,8 @@ void Compassion(int** arr, int y, int x, int size, int cmp) {
         if (flag == 0)
             break;
     }
-
-    //¾ĞÃàÀÌ µÈ °ÍÀÌ¹Ç·Î
-    //¾ĞÃà Ã³¸® ÈÄ Á¾·á;
+    
+    //ë¶„í• ì´ ì •ìƒì ìœ¼ë¡œ ì§„í–‰ëœ ê²ƒì´ë¯€ë¡œ 
     if (flag == 1) {
         if (cmp == 1)
             o_cnt++;
@@ -36,22 +35,19 @@ void Compassion(int** arr, int y, int x, int size, int cmp) {
             z_cnt++;
         return;
     }
-
-    //ºĞÇÒ Á¤º¹
-    //¹üÀ§À» ¹İÀ¸·Î
-    Compassion(arr, y, x, half, arr[y][x]);
-    //ÀüÁø
-    Compassion(arr, y + half, x, half, arr[y + half][x]);
-    Compassion(arr, y, x + half, half, arr[y][x + half]);
-    //´ë°¢¼±
-    Compassion(arr, y + half, x + half, half, arr[y + half][x + half]);
+    //ë¶„í• íƒìƒ‰ ì‹œì‘
+    compassion(arr, y, x, half, arr[y][x]); //ë²”ìœ„ 
+    compassion(arr, y + half, x, half, arr[y+half][x]); //í•œì¹¸
+    compassion(arr, y, x + half, half, arr[y][x + half]); //í•œì¹¸
+    compassion(arr, y + half, x + half, half, arr[y + half][x + half]); //ëŒ€ê°ì„ 
     return;
 }
 
 int* solution(int** arr, size_t arr_rows, size_t arr_cols) {
     int* answer = (int*)malloc(sizeof(int) * 2);
-
-    Compassion(arr, 0, 0, arr_rows, arr[0][0]);
+    answer[0] = 0, answer[1] = 0;
+    
+    compassion(arr, 0, 0, arr_rows, arr[0][0]);
     answer[0] = z_cnt, answer[1] = o_cnt;
     return answer;
 }
