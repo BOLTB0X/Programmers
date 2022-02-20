@@ -1,73 +1,85 @@
 #include <string>
 #include <vector>
-#include <queue>
+#define INF 0x7fffffff
+#define ML 20001
 
 using namespace std;
 
-//°¡Àå ¸Õ ³ëµåÀÇ °¹¼ö
-int max_cnt = 0;
+typedef struct {
+    int pos, cost;
+} Node;
 
-//´ÙÀÍ½ºÆ®¶ó
-void dijkstra(vector<int> graph[], vector<bool>& visited, int* dist, int cur) {
-    queue<pair<int, int>> q;
-    q.push({ cur,1 });
+Node que[ML];
+int fr = 0, re = 0;
 
-    while (!q.empty()) {
-        int now = q.front().first;
-        int cnt = q.front().second;
-        q.pop();
+//push
+void enqueue(Node data) {
+    que[re++] = data;
+    return;
+}
 
-        //Å½»ö
-        for (int i = 0; i < graph[now].size(); ++i) {
-            int next = graph[now][i];
-            
-            //Àç¹æ¹®ÀÌ¸é
+//pop
+Node dequeue(void) {
+    return que[fr++];
+}
+
+vector<int> adj[ML]; //ë¬´í–¥ ì¸ì ‘ë¦¬ìŠ¤íŠ¸
+vector<int> dist; //ê±°ë¦¬ì •ë³´ë¥¼ ë‹´ëŠ” ë²¡í„°
+vector<bool> visited; //ë°©ë¬¸ë¦¬ìŠ¤íŠ¸
+
+//ë‹¤ìµìŠ¤íŠ¸
+int dijkstra(int start) {
+    int max_dist = 0;
+    //ìš°ì„ ìˆœìœ„ í ì„ ì–¸
+    
+    enqueue({ start, 1 });
+    dist[start] = 1;
+    visited[start] = 1; //ì¶œë°œì§€ì 
+
+    while (fr < re) {
+        Node cur = dequeue();
+
+        //ì—°ê²°ëœ ë…¸ë“œ ìˆœíšŒ
+        for (int& next : adj[cur.pos]) {
             if (visited[next])
                 continue;
-            if (cnt + 1 < dist[next]) {
-                dist[next] = cnt + 1;
-                visited[next] = true;
-                if (max_cnt < cnt + 1)
-                    max_cnt = cnt + 1;
-                q.push({ next,cnt + 1 });
+
+            //ê°ˆ ë…¸ë“œê°€ í¬ë‹¤ë©´ -> ì§„í–‰ ê°€ëŠ¥
+            if (cur.cost + 1 < dist[next]) {
+                dist[next] = cur.cost + 1;
+                visited[next] = 1;
+
+                //ìµœëŒ€ ê±°ë¦¬ êµì²´
+                if (max_dist < cur.cost + 1)
+                    max_dist = cur.cost + 1;
+                enqueue({ next, cur.cost + 1 });
             }
         }
     }
+
+    return max_dist;
 }
 
 int solution(int n, vector<vector<int>> edge) {
     int answer = 0;
-    //¹«Çâ±×·¡ÇÁ »ı¼º
-    vector<int> graph[20001];
-    //¹æ¹®¸®½ºÆ® »ı¼º ¹× ÃÊ±âÈ­
-    vector<bool> visited(edge.size(), false);
-    //°Å¸® ¹è¿­ µ¿ÀûÇÒ´ç »ı¼º
-    int* dist = new int[n + 1];
+    dist.resize(n + 1, INF); //ìµœëŒ“ê°’ìœ¼ë¡œ ì´ˆê¸°í™”
+    visited.resize(n + 1, false); // ë°©ë¬¸ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
 
-    for (int i = 1; i <= n; ++i) {
-        //°¢ °Å¸®¿¡ ÃÖ´ñ°ª ´ëÀÔ
-        dist[i] = 0x7fffffff;
-    }
-
-    //2Â÷¿ø º¤ÅÍ ¿§Áö Á¤º¸¸¦ ±×·¡ÇÁ·Î ³Ñ±è
-    //¿­Àº 2·Î °íÁ¤
+    //2ì°¨ì› ë²¡í„° ì—£ì§€ ì •ë³´ë¥¼ ê·¸ë˜í”„ë¡œ ë„˜ê¹€
     for (int i = 0; i < edge.size(); ++i) {
-        //¹«Çâ±×·¡ÇÁ
-        graph[edge[i][0]].push_back(edge[i][1]);
-        graph[edge[i][1]].push_back(edge[i][0]);
-    }
+        //ë¬´í–¥ê·¸ë˜í”„
+        adj[edge[i][0]].push_back(edge[i][1]);
+        adj[edge[i][1]].push_back(edge[i][0]);
+    }   
 
-    //Ã¹ ½ºÅ¸Æ® 0À¸·Î ½ÃÀÛ
-    dist[1] = 0;
-    //´ÙÀÍ½ºÆ®¶ó·Î ³ëµå Å½»ö
-    dijkstra(graph,visited,dist,1);
-    
-    //ÃÖ´ë °¹¼ö Å½»ö
-    for (int i = 1; i <= n; ++i) {
-        if (dist[i] == max_cnt)
+    //ê°€ì¥ ë¨¼ ê¸¸ì´ ë°˜í™˜ 
+    int max_dist = dijkstra(1);
+
+    for (int i = 2; i <= n; ++i) {
+        if (dist[i] == max_dist)
             answer++;
     }
 
-    //Á¤´ä ¹İÈ¯
+    //ì •ë‹µ ë°˜í™˜
     return answer;
 }
