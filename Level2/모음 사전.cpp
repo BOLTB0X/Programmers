@@ -1,42 +1,45 @@
 #include <string>
 #include <vector>
-#include <algorithm> //Á¤·Ä¿ë
+#include <algorithm>
 
 using namespace std;
 
+char moum[5] = { 'A', 'E', 'I', 'O', 'U' }; //ëª¨ìŒ
 vector<string> per;
-char moum[5] = { 'A', 'E', 'I', 'O', 'U' };
 
-void DFS(string word, int leng) {
-    //Å»ÃâÁ¶°Ç
-    if (word.length() == leng) {
+//ê¹Šì´ìš°ì„ íƒìƒ‰ìœ¼ë¡œ ë°±íŠ¸ë˜í‚¹
+void DFS(string word, int size) {
+    //íƒˆì¶œ ì¡°ê±´
+    if (size == word.length()) {
         per.push_back(word);
         return;
     }
 
-    //Áßº¹¼ø¿­Ã³·³ 
     for (char& m : moum)
-        DFS(word + m, leng);
+        DFS(word + m, size);
+
     return;
 }
 
 int solution(string word) {
     int answer = 0;
 
-    //°¢ ¹éÆ®·¡Å·À¸·Î ¼ø¿­·Î ³ª¿Ã ¸ğµç ´Ü¾î Á¶ÇÕÀ» ±¸ÇÕ
+    //ì¤‘ë³µìˆœì—´ì„ êµ¬í•´ì•¼í•¨
     for (int i = 1; i <= 5; ++i) {
-        string tmp_word = "";
-        DFS(tmp_word, i);
+        string alp = "";
+        DFS(alp, i);
     }
 
-    //´Ü¾î ¼ø¿­ÀÌ A, E, I ..... AA µî ¼¯¿©ÀÖ¾î Á¤·ÄÀÌ ÇÊ¿ä
+    //ì •ë ¬
     sort(per.begin(), per.end());
 
+    //í•´ë‹¹ ë‹¨ì–´ê°€ ëª‡ë²ˆì§¸ì¸ì§€ ì²´í¬
     for (int i = 0; i < per.size(); ++i) {
         if (word == per[i]) {
-            answer = i + 1;
+            answer = i + 1; //ì¸ë±ìŠ¤ + 1
             break;
         }
     }
+    //ë°˜í™˜
     return answer;
 }
