@@ -7,7 +7,7 @@ using namespace std;
 string tmp = "";
 vector<int> per;
 
-//�Ҽ��Ǻ�
+//¼Ò¼öÆÇº°
 bool is_primeNumber(int number) {
     if (number == 1 || number == 0)
         return false;
@@ -42,7 +42,7 @@ int solution(string numbers) {
 
     sort(per.begin(), per.end());
     per.erase(unique(per.begin(), per.end()), per.end());
-
+    
     for (int i = 0; i < per.size(); ++i) {
         if (is_primeNumber(per[i]))
             answer++;
