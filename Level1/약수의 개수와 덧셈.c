@@ -7,15 +7,17 @@ int solution(int left, int right) {
 
     for (int i = left; i <= right; ++i) {
         int cnt = 0;
-        //°¢ ¾à¼ö °¹¼ö È®ÀÎ
+        //ê° ì•½ìˆ˜ ê°¯ìˆ˜ í™•ì¸
         for (int j = 1; j <= i; ++j) {
             if (i % j == 0)
                 cnt++;
         }
-        if (cnt % 2 == 0)
+        
+        if (cnt % 2 == 0) //ì§ìˆ˜
             answer += i;
-        else
+        else //í™€ìˆ˜
             answer -= i;
     }
+    //ë°˜í™˜
     return answer;
 }
