@@ -4,7 +4,7 @@
 using namespace std;
 
 long long answer = 0;
-vector<long long> adj[300001]; //ÀÎÁ¢¸®½ºÆ®·Î º¯°æ
+vector<long long> adj[300001]; //ì¸ì ‘ë¦¬ìŠ¤íŠ¸ë¡œ ë³€ê²½
 
 long long Abs(long long a) {
     return a < 0 ? -a : a;
@@ -12,10 +12,11 @@ long long Abs(long long a) {
 
 void DFS(vector<long long>& tot, int cur, int par) {
     for (long long& next : adj[cur]) {
-        if (next != par) //ºÎ¸ğ³ëµå¶û ´Ù¸£´Ù¸é
+        if (next != par) //ë¶€ëª¨ë…¸ë“œë‘ ë‹¤ë¥´ë‹¤ë©´
             DFS(tot, next, cur);
     }
-    // DFS ´Ù Å½»ö ÀÌÈÄ
+    
+    // DFS ë‹¤ íƒìƒ‰ ì´í›„
     tot[par] += tot[cur];
     answer += Abs(tot[cur]);
 
@@ -25,17 +26,20 @@ void DFS(vector<long long>& tot, int cur, int par) {
 long long solution(vector<int> a, vector<vector<int>> edges) {
     long long size = a.size();
     vector<long long> tot(size, 0); //long long
+    
     for (long long i = 0; i < size; ++i)
         tot[i] = a[i];
-
-    for (int i = 0; i < edges.size(); ++i) {
-        adj[edges[i][0]].push_back(edges[i][1]);
-        adj[edges[i][1]].push_back(edges[i][0]);
+    
+    //ì¸ì ‘ë¦¬ìŠ¤íŠ¸ë¡œ ë³€ê²½
+    for (auto &e : edges) {
+        adj[e[0]].push_back(e[1]);
+        adj[e[1]].push_back(e[0]);
     }
 
-    DFS(tot, 0, 0); //±íÀÌ¿ì¼±Å½»ö
+    DFS(tot, 0, 0); //ê¹Šì´ìš°ì„ íƒìƒ‰
 
     if (tot[0] == 0)
         return answer;
+    
     return -1;
 }
