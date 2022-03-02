@@ -2,12 +2,12 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-// a_len¿∫ πËø≠ a¿« ±Ê¿Ã¿‘¥œ¥Ÿ.
-// b_len¿∫ πËø≠ b¿« ±Ê¿Ã¿‘¥œ¥Ÿ.
 int solution(int a[], size_t a_len, int b[], size_t b_len) {
     int answer = 0;
-    for (int i = 0; i < a_len; i++) {
+    
+    //Ï†ïÎ∞© ÌñâÎ†¨Ïù¥ÎØÄÎ°ú
+    for (int i = 0; i < a_len; ++i) 
         answer += (a[i] * b[i]);
-    }
+    
     return answer;
 }
