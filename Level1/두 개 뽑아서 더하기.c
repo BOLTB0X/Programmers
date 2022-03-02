@@ -2,40 +2,40 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-int tmp[10000];
+int tmp[10001];
+int tmp_idx = 0;
 
-int compare(const void* a, const void* b) {
+int compare(const void *a, const void *b) {
     return *(int*)a - *(int*)b;
 }
 
-int* solution(int numbers[], size_t numbers_len) {
-    int tmp_idx = 0, flag, ele;
+//ì¤‘ë³µ ì²´í¬
+int is_duplicate_element(int ele) {
+    for (int i = 0; i < tmp_idx; ++i) {
+        if (tmp[i] == ele)
+            return 1; //ì¤‘ë³µ O
+    }
+    return 0; //ì¤‘ë³µ X
+}
 
-    //¿ÏÀüÅ½»ö
+int* solution(int numbers[], size_t numbers_len) {
+    //ì™„ì „íƒìƒ‰ ì´ìš©
     for (int i = 0; i < numbers_len - 1; ++i) {
         for (int j = i + 1; j < numbers_len; ++j) {
-            ele = numbers[i] + numbers[j];
-            flag = 1;
-
-            //Áßº¹µÇ´Â °Ë»ç
-            for (int k = 0; k < tmp_idx; ++k) {
-                if (ele == tmp[k]) {
-                    flag = 0;
-                    break;
-                }
-            }
-            if (flag == 1) {
+            int ele = numbers[i] + numbers[j]; //ì›ì†Œ í›„ë³´;
+            
+            //ì¤‘ë³µì²´í¬í•˜ë©° ì‚½ì…
+            if (is_duplicate_element(ele) == 0)
                 tmp[tmp_idx++] = ele;
-            }
         }
     }
-
-    //Á¤´ä ¹è¿­ »ı¼º
+    
+    //ì •ë‹µ ë°°ì—´ ë™ì  í• ë‹¹
     int* answer = (int*)malloc(sizeof(int) * tmp_idx);
     for (int i = 0; i < tmp_idx; ++i)
         answer[i] = tmp[i];
-
-    //Á¤·Ä
+    
+    //í€µì •ë ¬ ì´ìš©
     qsort(answer, tmp_idx, sizeof(int), compare);
     return answer;
 }
