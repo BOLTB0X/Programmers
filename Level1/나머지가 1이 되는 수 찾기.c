@@ -5,11 +5,14 @@
 
 int solution(int n) {
     int answer = 0;
-    for (int i = 2; i <= MV; ++i) {
+    
+    //완전탐색
+    for (int i = 2; i < MV; ++i) {
         if (n % i == 1) {
             answer = i;
             break;
         }
     }
+    //반환
     return answer;
 }
