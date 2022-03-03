@@ -5,29 +5,24 @@ using namespace std;
 
 string solution(string number, int k) {
     string answer = "";
-
-    //¹İº¹ÇÑ ±æÀÌ
-    int number_size = number.size() - k;
-    int start = 0;
+    int size = number.length();
+    int start_idx = 0;
     
-    //¿ÏÀüÅ½»ö ½ºÅ¸ÀÏ·Î
-    for (int i = 0; i < number_size; i++) {
-        //ÃÖ´ë°ª ¼ÂÆÃ
-        char max_number = number[start];
-        int max_idx = start;
+    //ê·¸ë¦¬ë“œ ì•Œê³ ë¦¬ì¦˜
+    //ë²”ìœ„ ì…‹íŒ… ì¡°ì‹¬
+    for (int i = 0; i < size - k; ++i) {
+        int max_idx = start_idx;
         
-        //¼ÂÆÃµÈ °ª ºÎÅÍ k°Å¸®¸¸Å­ Å½»ö
-        for (int j = start; j <= k + i; j++) {
-            if (max_number < number[j]) {
-                max_number = number[j];
+        //í˜„ì¬ êµ¬ê°„ì—ì„œ ìµœëŒ“ê°’ íƒìƒ‰
+        for (int j = start_idx; j <= k + i; ++j) {
+            if (number[max_idx] < number[j]) 
                 max_idx = j;
-            }
         }
-
-        //Å½»ö ÈÄ
-        start = max_idx + 1;
-        answer += max_number;
+        
+        //ìµœëŒ“ê°’ ì…‹íŒ… ëìœ¼ë¯€ë¡œ
+        start_idx = max_idx + 1; //ì°¾ì€ ìµœëŒ“ê°’ ë‹¤ìŒ ë¶€í„° ë‹¤ì‹œ ì‹œì‘
+        answer += number[max_idx];
     }
-    //Á¤´ä ¹İÈ¯
+    
     return answer;
 }
