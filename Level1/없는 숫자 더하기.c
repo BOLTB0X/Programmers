@@ -2,20 +2,21 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-bool is_arr(int numbers[], size_t numbers_len, int n) {
+//배열안에 있는 지 체크
+int is_arr(int numbers[], size_t numbers_len, int n) {
     for (int i = 0; i < numbers_len; ++i) {
         if (numbers[i] == n)
-            return true;
+            return 1;
     }
-    return false;
+    return 0;
 }
 
-// numbers_len�� �迭 numbers�� �����Դϴ�.
 int solution(int numbers[], size_t numbers_len) {
     int answer = 0;
     
     for (int i = 0; i <= 9; ++i) {
-        if (!is_arr(numbers, numbers_len, i))
+        //배열안에 원소가 있는 가?
+        if (is_arr(numbers, numbers_len, i) == 0)
             answer += i;
     }
     return answer;
