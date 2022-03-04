@@ -4,32 +4,27 @@
 
 using namespace std;
 
-//정렬조건 수정 즉 
-//앞뒤로 더한 값이 큰거를 앞으로
-bool compare(const string& a, const string& b) {
-    return a+b > b+a;
+int compare(const string a, const string b) {
+    return a + b > b + a;
 }
 
 string solution(vector<int> numbers) {
     string answer = "";
-    vector<string> v;
+    int size = numbers.size();
+    vector<string> tmp;
     
-    //각 문자열을 정수로 변환하여 벡터에 삽입
-    for (int i=0;i<numbers.size();++i) 
-        v.push_back(to_string(numbers[i]));
+    for (int& number: numbers) {
+        string n = to_string(number);
+        tmp.push_back(n);
+    }
+    //정렬 기준 변경 후
+    //내림차순 정렬
+    sort(tmp.begin(),tmp.end(), compare);
     
-    //정렬조건 수정 후 정렬
-    sort(v.begin(),v.end(),compare);
-   
-    //v벡터가 정렬되었으므로 정답에 차례로 넣어준다.
-    for (int i=0;i<v.size();++i)
-        answer += v[i];
-    
-    //마지막 체크
-    //만약 맨 앞자리가 0이면
+    for (int i=0; i<tmp.size();++i) {
+        answer += tmp[i];
+    }
     if (answer[0] == '0')
         return "0";
-    
-    //정답 반환
     return answer;
 }
