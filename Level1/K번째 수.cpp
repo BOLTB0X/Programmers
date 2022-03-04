@@ -35,19 +35,20 @@ void quick_Sort(vector<int> &arr, int start, int end) {
 //요구되로 원소 구하기
 int vector_sliding(vector<int> &array, int start, int end, int target) {
     vector<int> tmp;
+    //탐색
     for (int i = start - 1; i < end; ++i) {
         tmp.push_back(array[i]);
     }
     
     quick_Sort(tmp, 0, tmp.size() - 1); //정렬
-    return tmp[target-1];
+    return tmp[target - 1];
 }
 
 vector<int> solution(vector<int> array, vector<vector<int>> commands) {
     vector<int> answer;
     
     //명령대로 배열 원소 구함
-    for (auto& cmd : commands) {
+    for (vector<int>& cmd : commands) {
         int ret = vector_sliding(array, cmd[0],cmd[1], cmd[2]);
         answer.push_back(ret);
     }
