@@ -3,18 +3,19 @@
 #include <stdlib.h>
 
 int* solution(int n, long long left, long long right) {
-    int* answer = (int*)malloc(sizeof(int) * (right - left + 1)); //±æÀÌ
+    int* answer = (int*)malloc(sizeof(int) * (right - left + 1)); //ê¸¸ì´
     int idx = 0;
-
-    //±ÔÄ¢À» º¸¸é 
+    
+    //ê·œì¹™ì„ ë³´ë©´ 
     for (long long i = left; i <= right; ++i) {
         int row = i / n;
         int col = i % n;
-
-        //Çà°ú ¿­ °ª Áß ´õ Å« °ª + 1·Î ÇØ¾ßÇÔ
+        
+        //í–‰ê³¼ ì—´ ê°’ ì¤‘ ë” í° ê°’ + 1ë¡œ í•´ì•¼í•¨
         int ele = row > col ? row + 1 : col + 1;
-        //Á¤´ä »ğÀÔ
+        //ì •ë‹µ ì‚½ì…
         answer[idx++] = ele;
     }
+    //ë°˜í™˜
     return answer;
 }
