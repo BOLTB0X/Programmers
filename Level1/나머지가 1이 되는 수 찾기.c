@@ -8,6 +8,7 @@ int solution(int n) {
     
     //완전탐색
     for (int i = 2; i < MV; ++i) {
+        //찾았다면
         if (n % i == 1) {
             answer = i;
             break;
