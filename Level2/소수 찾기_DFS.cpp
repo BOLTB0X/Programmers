@@ -1,75 +1,81 @@
 #include <string>
 #include <vector>
-
+#define MS 10000001 //문자열 길이가 7이므로
 using namespace std;
 
-vector<int> per;
-int check[10000000] = { 0, };
+vector<int> prime;
+int check[MS] = {0,}; //소수 체크를 위한 배열
 
 //에라토스테네체
 void eratos(void) {
     check[0] = check[1] = 1;
-    for (int i = 2; i * i < 10000000; ++i) {
-        if (check[i] == 1) //이미 소수가 아니라면
+    
+    for (int i = 2; i * i < MS; ++i) {
+        if (check[i] == 1)
             continue;
-        for (int j = i + i; j < 10000000; j += i)
+        for (int j = i + i; j < MS; j += i)
             check[j] = 1;
     }
     return;
 }
 
-//정수로 변환
-int get_dec(string str) {
+//문자열 -> int형으로 변환
+int trans_int(string str) {
     int res = 0;
+    //문자열이므로 역순으로
     for (int i = str.length() - 1, j = 1; i >= 0; --i, j *= 10)
         res += j * (str[i] - '0');
     return res;
 }
 
-//중복 방지
-int is_in_per(int number) {
-    for (int& p : per) {
-        if (p == number)
-            return 0;
+//중복방지용 -> vector 유니크도 이용가능
+int in_prime_vector(int n) {
+    for (int&p : prime) {
+        if (p == n)
+            return 1;
     }
-    return 1;
+    
+    return 0;
 }
 
-//백트래킹
-void DFS(string numbers, vector<bool>& visited, string tmp, int size) {
-    //탈출 조건
-    if (tmp.length() == size) {
-        //int number = stoi(tmp); //정수로 변환
-        int number = get_dec(tmp);
-        if (check[number] == 0 && is_in_per(number))
-            per.push_back(number);
+//백트래킹을 이용한 경우의 수
+void DFS(string numbers, string number, vector<int>& visited, int size) {
+    //탈출조건 -> 현재 만들어진 number의 길이가 제한 size와 같다면
+    if (number.length() == size) {
+        int n = trans_int(number); //변환, atoi도 가능
+        //해당수가 소수이고 이미 벡터에 삽입되있지 않다면
+        if (check[n] == 0 && in_prime_vector(n) == 0)  
+            prime.push_back(n);
         return;
     }
-
+    
+    //각 문자열 내 원소들로 순회시작
     for (int i = 0; i < numbers.length(); ++i) {
+        //재방문인 경우 -> 중복 허용 X
         if (visited[i] == 1)
             continue;
+        
         visited[i] = 1;
-        tmp.push_back(numbers[i]);
-        DFS(numbers, visited, tmp, size);
-        tmp.pop_back();
+        number.push_back(numbers[i]);
+        DFS(numbers, number, visited, size); //탐색
         visited[i] = 0;
+        number.pop_back();
     }
     return;
 }
 
 int solution(string numbers) {
     int answer = 0;
-    vector<bool> visited(numbers.length(), false);
-
-    eratos(); //소수 제거
-    for (int i = 1; i <= numbers.length(); ++i) {
+    int size = numbers.length(); //길이
+    vector<int> visited(size, 0);
+    eratos(); //먼저 소수 체크
+    
+    //1부터 사이즈까지 순차적으로 나올 수 있는 수 경우의 수를 확인
+    for (int i = 1; i <= size; ++i) {
         string tmp = "";
-        DFS(numbers, visited, tmp, i);
+        DFS(numbers, tmp, visited, i);
     }
-
-    //per벡터사이즈가 곧 갯수
-    answer = per.size();
-
+    
+    answer = prime.size(); //길이가 곧 갯수
     return answer;
 }
