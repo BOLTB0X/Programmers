@@ -1,36 +1,40 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#define MS 100000001
+#define MS 100000001 //ìµœëŒ€ ê¸¸ì´
 
-char str[MS] = { '\0', }; // ¹®ÀÚ¿­
+char str[MS] = {'\0',}; //í¸ì˜ë¥¼ ìœ„í•´ ë„ë¡œ ì´ˆê¸°í™”
 int idx = 0;
 
-//3Áø¹ı º¯È¯
-void get_ter(int n) {
-    while (n > 0) {
-        int mod = n % 3;
-        str[idx++] = (char)(mod + '0');
-        n /= 3;
+//10ì§„ë²• -> 3ì§„ë²• ë³€í™˜
+void trans_Ternary(int number) {
+    int tmp = number;
+    
+    //0ì´ ë˜ê¸° ì „ê¹Œì§€
+    while (tmp > 0) {
+        int mod = tmp % 3;
+        str[idx++] = mod + '0';
+        tmp /= 3;
     }
-
+    //ì–´ì°¨í”¼ ì•ë’¤ ë°˜ì „í•´ì•¼í•˜ë¯€ë¡œ
     return;
 }
 
-//10Áø¼ö º¯È¯
-int get_dec(void) {
-    int tot = 0;
-    //idx°¡ °ğ ¹®ÀÚ¿­ÀÇ ±æÀÌ
-    for (int i = idx - 1, j = 1; i >= 0; --i, j *= 3)
-        tot += j * (int)(str[i] - '0');
-
-    return tot;
+//3ì§„ë²• - > 10ì§„ë²• 
+int trans_dec(void) {
+    int dec = 0;
+    
+    for(int i = idx - 1, j = 1; i>=0; --i, j *= 3)
+        dec += j*(str[i] - '0');
+    
+    return dec;
 }
 
 int solution(int n) {
     int answer = 0;
-
-    get_ter(n);
-    answer = get_dec();
+    
+    trans_Ternary(n);
+    answer = trans_dec();
+    
     return answer;
 }
