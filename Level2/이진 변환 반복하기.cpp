@@ -3,49 +3,56 @@
 
 using namespace std;
 
-int t_cnt = 0, z_cnt = 0;
+int one_cnt = 0, zero_cnt = 0;
 
 //길이 반환
-int get_len(string s) {
-    int o_cnt = 0, size = s.length();
+int get_length(string s) {
+    int size = s.length(); //길이
     
-    for (int i = 0; i<size; ++i) {
-        if (s[i] == '1')
-            o_cnt++;
+    for(char& c : s) {
+        if (c == '1')
+            one_cnt++; //곧 길이
         else
-            z_cnt++;
+            zero_cnt++;
     }
     
-    return o_cnt;
+    return one_cnt;
 }
 
-//이진변환 결과 반환
-string get_bin(int len) {
-    string tmp = "";
-    int number = len;
+string get_binary(int n) {
+    string ret, tmp;
     
-    while(number > 0) {
-        int r = number % 2;
-        tmp += ((char)r + '0');
-        number /= 2;
+    while (n > 0) {
+        int mod = n % 2;
+        
+        tmp += (char)(mod + '0');
+        
+        n /= 2;
     }
     
-    //뒤집어진 결과로 완성되지만 1인 결과확인과 길이를 구할 것이므로
-    //그냥 반환
-    return tmp;
+    int size = tmp.length();
+    
+    //뒤집어져있으니 다시 
+    for (int i = size - 1; i>=0; --i) 
+        ret += tmp[i];
+    
+    return ret;
 }
 
 vector<int> solution(string s) {
     vector<int> answer;
+    int cnt = 0;
     
-    string str = s;
-    while (1) {
-        if (str == "1")
+    while(1) {
+        if (s == "1")
             break;
-        str = get_bin(get_len(str));
-        t_cnt++;
+        s = get_binary(get_length(s));
+        cnt++;
+        one_cnt = 0;
     }
-    answer.push_back(t_cnt);
-    answer.push_back(z_cnt);
+    
+    answer.push_back(cnt);
+    answer.push_back(zero_cnt);
+    
     return answer;
 }
