@@ -3,57 +3,63 @@
 
 using namespace std;
 
-//°á°ú
-vector<int> ret(2, 0);
+int one_cnt = 0, zero_cnt = 0;
 
-//ºĞÇÒÁ¤º¹À¸·Î ¾ĞÃà
-void check_Compression(vector<vector<int>>& arr, int y, int x, int size, int cmp) {
+void compress(vector<vector<int>> &arr, int size, int y, int x, int cmp) {
     int half = size / 2;
-    bool flag = 1;
+    int flag = 1; //ì²´í¬ìš©
 
+    //2ë¯¸ë§Œ
     if (size < 2) {
         if (cmp == 1)
-            ret[1]++;
+            one_cnt++;
         else
-            ret[0]++;
+            zero_cnt++;
         return;
     }
-
+    
+    
+    //ë¶„í• ë¡œ í™•ì¸
     for (int i = y; i < y + size; ++i) {
         for (int j = x; j < x + size; ++j) {
+            //ì••ì¶• ì‹¤íŒ¨
             if (arr[i][j] != cmp) {
                 flag = 0;
                 break;
             }
         }
-        if (!flag)
+        //ì••ì¶• ì‹¤íŒ¨
+        if (flag == 0)
             break;
     }
-
-    //Äõµå ¾ĞÃàÀÌ µÈ °ÍÀÌ¹Ç·Î
-    if (flag) {
+    
+    //ì••ì¶•ì´ ì„±ê³µí•œ ê²½ìš°
+    if (flag == 1) {
         if (cmp == 1)
-            ret[1]++;
+            one_cnt++;
         else
-            ret[0]++;
+            zero_cnt++;
         return;
     }
-
-    //ºĞÇÒÁ¤º¹
-    //ºĞÇÒ ¹üÀ§ ¹İÀ¸·Î
-    check_Compression(arr, y, x, half, arr[y][x]);
-    // ÇÑÄ­ ÀüÁø
-    check_Compression(arr, y + half, x, half, arr[y + half][x]);
-    check_Compression(arr, y, x + half, half, arr[y][x + half]);
-    //´ë°¢¼± ÀüÁø
-    check_Compression(arr, y + half, x + half, half, arr[y + half][x + half]);
+    
+    // ì••ì¶•ì´ ì•ˆëœ ê²ƒì´ë¯€ë¡œ
+    // ë‹¤ì‹œ ë¶„í• 
+    compress(arr, half, y, x, arr[y][x]); // ê¸¸ì´ë¥¼ ë‹¤ì‹œ ë°˜ìœ¼ë¡œ
+    compress(arr, half, y + half, x, arr[y + half][x]); // y
+    compress(arr, half, y, x + half, arr[y][x + half]); // x
+    compress(arr, half, y + half, x + half, arr[y + half][x + half]); //ë‘˜ ë‹¤
     return;
 }
 
 vector<int> solution(vector<vector<int>> arr) {
     vector<int> answer;
-
-    check_Compression(arr, 0, 0, arr.size(), arr[0][0]);
-    answer = ret;
+    int size = arr.size(); //ê¸¸ì´
+    int y = 0, x = 0;
+    
+    //ì••ì¶• ì‹œì‘
+    compress(arr, size, y, x, arr[y][x]);
+    
+    answer.push_back(zero_cnt);
+    answer.push_back(one_cnt);
     return answer;
 }
