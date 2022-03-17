@@ -5,6 +5,7 @@ using namespace std;
 
 //게시판
 vector<vector<int>> board;
+
 //달팽이식 이동방향
 const int dy[3] = {1, 0, -1};
 const int dx[3] = {0, 1, -1};
@@ -44,7 +45,7 @@ vector<int> solution(int n) {
         }
     }
     
-    //정답 삽입
+    //답 삽입
     for (int i=1; i<=n;++i) {
         for (int j=1; j <=n; ++j) {
             if (board[i][j] != 0)
