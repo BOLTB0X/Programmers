@@ -1,19 +1,20 @@
 #include <string>
 #include <vector>
-#define MS 10000001 //문자열 길이가 7이므로
+#define Max_Size 10000001 // 최대 길이
+
 using namespace std;
 
 vector<int> prime;
-int check[MS] = {0,}; //소수 체크를 위한 배열
+int check[Max_Size] = {0,}; //소수 체크를 위한 배열
 
 //에라토스테네체
 void eratos(void) {
     check[0] = check[1] = 1;
     
-    for (int i = 2; i * i < MS; ++i) {
+    for (int i = 2; i * i < Max_Size; ++i) {
         if (check[i] == 1)
             continue;
-        for (int j = i + i; j < MS; j += i)
+        for (int j = i + i; j < Max_Size; j += i)
             check[j] = 1;
     }
     return;
