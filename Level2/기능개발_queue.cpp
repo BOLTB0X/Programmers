@@ -20,24 +20,21 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
     vector<int> answer;
     int size = progresses.size();
     
-    //큐에 삽입
-    for (int i = 0; i < size; ++i)
+    for (int i =0; i < size; ++i)
         enqueue(i);
     
-    //큐가 비어질때까지
     while (fr < re) {
-        int cnt = 0; //배포 갯수
+        int cnt = 0;
         
-        //진도율 업데이트
-        for (int i = 0; i < size; ++i) 
+        // 진도율
+        for (int i = 0; i < size; ++i)
             progresses[i] += speeds[i];
         
-        //큐가 비어있지 않고 진도율이 100이 되었다면
         while(fr < re && progresses[que[fr]] >= 100) {
-            cnt++;
+            cnt++; // 카운트
             dequeue();
         }
-        if (cnt >= 1) //배포가 되었다면
+        if (cnt != 0)
             answer.push_back(cnt);
     }
     return answer;
