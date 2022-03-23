@@ -20,7 +20,6 @@ void DFS(vector<int>& numbers, int target, int level, int tot) {
 
 int solution(vector<int> numbers, int target) {
     int answer = 0;
-    
     //탐색 시작
     DFS(numbers, target, 0,0);
     answer = cnt;
