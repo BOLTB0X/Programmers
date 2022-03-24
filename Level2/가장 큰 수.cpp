@@ -1,30 +1,28 @@
 #include <string>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // sort
 
 using namespace std;
 
-int compare(const string a, const string b) {
+int compare(string a, string b) {
     return a + b > b + a;
 }
 
 string solution(vector<int> numbers) {
     string answer = "";
-    int size = numbers.size();
-    vector<string> tmp;
+    vector<string> v;
     
-    for (int& number: numbers) {
-        string n = to_string(number);
-        tmp.push_back(n);
-    }
-    //정렬 기준 변경 후
-    //내림차순 정렬
-    sort(tmp.begin(),tmp.end(), compare);
+    for (int& num: numbers) 
+        v.push_back(to_string(num));
     
-    for (int i=0; i<tmp.size();++i) {
-        answer += tmp[i];
-    }
+    // 정렬
+    sort(v.begin(), v.end(), compare);
+    for (string &i: v)
+        answer += i;
+    
+    // 첫 번째 자리가 0이면
     if (answer[0] == '0')
-        return "0";
+        answer = "0";
+        
     return answer;
 }
