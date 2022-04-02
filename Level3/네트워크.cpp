@@ -12,9 +12,11 @@ void DFS(vector<vector<int>> &computers, vector<bool> &visited,int start) {
         //재방문인 경우
         if (visited[i])
             continue;
+        
         //연결되어있지 않을 경우
         if (computers[start][i] == 0)
             continue;
+        
         //다음 정점으로 DFS
         DFS(computers,visited,i);
     }
