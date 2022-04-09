@@ -1,41 +1,33 @@
 #include <string>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
-int que[100];
-int fr = 0, re = 0;
-
-void enqueue(int data) {
-    que[re++] = data;
-    return;
-}
-
-void dequeue(void) {
-    fr++;
-    return;
-}
-
 vector<int> solution(vector<int> progresses, vector<int> speeds) {
     vector<int> answer;
-    int size = progresses.size();
+    queue<int> que; // 큐
     
-    for (int i =0; i < size; ++i)
-        enqueue(i);
+    // 순번 저장
+    for (int i = 0; i< progresses.size(); ++i) 
+        que.push(i);
     
-    while (fr < re) {
+    // 큐가 빌때까지
+    while(!que.empty()) {
         int cnt = 0;
         
-        // 진도율
-        for (int i = 0; i < size; ++i)
+        for (int i = 0; i < progresses.size(); ++i) 
             progresses[i] += speeds[i];
         
-        while(fr < re && progresses[que[fr]] >= 100) {
-            cnt++; // 카운트
-            dequeue();
+        // 배포되는 것을 체크
+        while(!que.empty() && progresses[que.front()] >= 100) {
+            cnt++;
+            que.pop();
         }
-        if (cnt != 0)
+        // 배포가 되었으면
+        if (cnt > 0)
             answer.push_back(cnt);
     }
+    
     return answer;
 }
