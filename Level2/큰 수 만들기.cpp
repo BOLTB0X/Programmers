@@ -14,7 +14,7 @@ string solution(string number, int k) {
         int max_idx = start_idx; // 최댓값을 알기위해 시작점으로
         // 그리디로 큰 값 체크
         for (int j = start_idx; j <= k + i; ++j) {            
-            if (number[max_idx] < number[j])
+            if (number[max_idx] - '0' < number[j] - '0')
                 max_idx = j;
         }
         
